@@ -1,15 +1,11 @@
 package cpu.present.transformers;
 
-import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
-import com.sun.xml.internal.ws.encoding.MtomCodec;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
-
-import java.awt.geom.FlatteningPathIterator;
-import java.math.BigDecimal;
 
 public class TransMethods {
     public static void main(String[] agrs){
-        System.out.println(binfToFloat("11000001101010000000000000000000",8,23));
+        System.out.println(Integer.MAX_VALUE);
+        System.out.println(Integer.parseInt("-48009508371"));
+
     }
 
     protected static String integerToBinComplement(String code){//整数转补码

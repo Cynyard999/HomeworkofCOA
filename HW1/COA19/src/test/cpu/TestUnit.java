@@ -38,6 +38,8 @@ public class TestUnit {
                 BigDecimal result = new BigDecimal(number.get(t));//
                 if (! target.equals(0)) {
                     //if (! result.divide(target).setScale(5).equals(1.00000)) {
+                    //System.out.println(target.toString());
+                    //System.out.println(result.toString());
                     if (! result.divide(target).setScale(5).equals(new BigDecimal("1.00000"))) {//尝试把1.00000变为字符串形式
                         errList.add(t);
                     }

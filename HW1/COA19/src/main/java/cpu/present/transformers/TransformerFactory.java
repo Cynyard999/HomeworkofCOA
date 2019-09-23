@@ -41,7 +41,7 @@ public class TransformerFactory {
             code = TransMethods.floatToBinf(code);
         } else if (rawType.equals(PresentType.BIN.FLOAT)) {
             if (rawType.equals(storageType)){
-                //
+                //nothing to do
             }
             else code = TransMethods.binfToFloat(code,eLength,sLength);
             // nothing to do

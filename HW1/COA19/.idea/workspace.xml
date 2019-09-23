@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d727692a-5ba1-4dec-ac16-f99d0b8713da" name="Default Changelist" comment="" />
+    <list default="true" id="d727692a-5ba1-4dec-ac16-f99d0b8713da" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cpu/present/transformers/TransMethods.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cpu/present/transformers/TransMethods.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cpu/present/transformers/TransformerFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cpu/present/transformers/TransformerFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/cpu/TestUnit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/cpu/TestUnit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/2019.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cpu/present/transformers/TransMethods.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/cpu/present/transformers/TransMethods.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/src/test/TestUnit.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/src/test/TestUnit.class" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -9,74 +19,67 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/2019$DecimalTest_testFloat3.ic" NAME="DecimalTest.testFloat3 Coverage Results" MODIFIED="1569223455392" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>cpu.*</FILTER>
+    </SUITE>
+  </component>
+  <component name="CoverageViewManager">
+    <option name="myElementSize" value="210" />
+  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/cpu/present/transformers/TransMethods.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="100">
-              <caret line="105" column="32" selection-start-line="105" selection-start-column="28" selection-end-line="105" selection-end-column="39" />
+            <state relative-caret-position="253">
+              <caret line="112" column="41" selection-start-line="112" selection-start-column="41" selection-end-line="112" selection-end-column="41" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#357#358#0" expanded="true" />
-                <element signature="e#445#446#0" expanded="true" />
                 <element signature="method#integerToBinComplement#0;class#TransMethods#0" />
                 <element signature="method#integerTo8421BCD#0;class#TransMethods#0" />
                 <element signature="method#BcdtoInteger#0;class#TransMethods#0" />
                 <element signature="method#floatToBinf#0;class#TransMethods#0" />
                 <element signature="method#binComplementToInteger#0;class#TransMethods#0" />
-                <element signature="e#5218#5219#0" expanded="true" />
-                <element signature="e#5250#5251#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cpu/present/Number.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="18" column="12" selection-start-line="18" selection-start-column="12" selection-end-line="18" selection-end-column="12" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cpu/present/transformers/Binf_trans.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="140">
-              <caret line="13" selection-start-line="13" selection-end-line="13" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#829#830#0" expanded="true" />
-                <element signature="e#858#859#0" expanded="true" />
-                <element signature="e#891#892#0" expanded="true" />
-                <element signature="e#921#922#0" expanded="true" />
-                <element signature="e#950#951#0" expanded="true" />
-                <element signature="e#977#978#0" expanded="true" />
-                <element signature="e#1006#1007#0" expanded="true" />
-                <element signature="e#1061#1062#0" expanded="true" />
-                <element signature="e#1089#1090#0" expanded="true" />
-                <element signature="e#1150#1151#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/cpu/DecimalTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="169">
-              <caret line="101" selection-start-line="101" selection-end-line="101" />
+            <state relative-caret-position="255">
+              <caret line="93" column="30" lean-forward="true" selection-start-line="93" selection-start-column="30" selection-end-line="93" selection-end-column="30" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/java/lang/String.java">
+        <entry file="file://$PROJECT_DIR$/src/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="161">
+                <caret line="7" column="106" selection-start-line="7" selection-start-column="106" selection-end-line="7" selection-end-column="106" />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/cpu/TestUnit.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="148">
-              <caret line="1962" selection-start-line="1962" selection-end-line="1962" />
+            <state relative-caret-position="-97">
+              <caret line="41" column="22" selection-start-line="41" selection-start-column="22" selection-end-line="41" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/java/math/BigDecimal.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="416">
+              <caret line="1692" selection-start-line="1692" selection-end-line="1692" />
             </state>
           </provider>
         </entry>
@@ -84,7 +87,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/java/lang/Integer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="140">
+            <state relative-caret-position="16836">
               <caret line="765" selection-start-line="765" selection-end-line="765" />
             </state>
           </provider>
@@ -93,7 +96,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/java/lang/NumberFormatException.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="377">
+            <state relative-caret-position="851">
               <caret line="64" selection-start-line="64" selection-end-line="64" />
             </state>
           </provider>
@@ -102,7 +105,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/cpu/BinTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
+            <state relative-caret-position="307">
               <caret line="29" column="175" selection-start-line="29" selection-start-column="175" selection-end-line="29" selection-end-column="175" />
             </state>
           </provider>
@@ -111,8 +114,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cpu/present/transformers/Transformer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="92">
-              <caret line="16" column="19" lean-forward="true" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="22" />
+            <state relative-caret-position="583">
+              <caret line="29" column="9" lean-forward="true" selection-start-line="29" selection-start-column="9" selection-end-line="29" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -120,8 +123,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cpu/present/transformers/TransformerFactory.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="301">
-              <caret line="43" column="18" selection-start-line="43" selection-start-column="18" selection-end-line="43" selection-end-column="18" />
+            <state relative-caret-position="-535">
+              <caret line="19" column="20" lean-forward="true" selection-start-line="19" selection-start-column="20" selection-end-line="19" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -140,13 +143,15 @@
       <find>Double</find>
     </findStrings>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/src/main/java/cpu/present/Number.java" />
         <option value="$PROJECT_DIR$/src/main/java/cpu/present/transformers/Temp.java" />
-        <option value="$PROJECT_DIR$/src/test/cpu/TestUnit.java" />
         <option value="$PROJECT_DIR$/src/test/cpu/BCD8421.java" />
         <option value="$PROJECT_DIR$/src/main/java/cpu/present/transformers/NumberTransforming.java" />
         <option value="$PROJECT_DIR$/src/main/java/cpu/present/transformers/Integer_trans.java" />
@@ -158,8 +163,10 @@
         <option value="$PROJECT_DIR$/src/main/java/cpu/present/transformers/Transformer.java" />
         <option value="$PROJECT_DIR$/src/test/cpu/BinTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/cpu/present/transformers/Binf_trans.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cpu/present/transformers/TransMethods.java" />
         <option value="$PROJECT_DIR$/src/main/java/cpu/present/transformers/TransformerFactory.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cpu/present/transformers/TransMethods.java" />
+        <option value="$PROJECT_DIR$/src/test/cpu/TestUnit.java" />
+        <option value="$PROJECT_DIR$/src/README.md" />
       </list>
     </option>
   </component>
@@ -177,10 +184,11 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="y" value="45" />
-    <option name="width" value="1945" />
-    <option name="height" value="1105" />
+    <option name="y" value="44" />
+    <option name="width" value="1947" />
+    <option name="height" value="1106" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -257,7 +265,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1569212487187" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1569224509864" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -280,41 +288,23 @@
     </option>
   </component>
   <component name="RunManager" selected="JUnit.DecimalTest">
+    <configuration name="TransMethods" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="cpu.present.transformers.TransMethods" />
+      <module name="2019" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="cpu.present.transformers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="All in 2019" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="2019" />
       <option name="PACKAGE_NAME" value="" />
       <option name="TEST_OBJECT" value="package" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="BinTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="2019" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="cpu.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="cpu" />
-      <option name="MAIN_CLASS_NAME" value="cpu.BinTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="BinTest.test3" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="2019" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="cpu.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="cpu" />
-      <option name="MAIN_CLASS_NAME" value="cpu.BinTest" />
-      <option name="METHOD_NAME" value="test3" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -334,7 +324,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="DecimalTest.testFloat4" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="DecimalTest.testFloat1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="2019" />
       <extension name="coverage">
         <pattern>
@@ -344,7 +334,23 @@
       </extension>
       <option name="PACKAGE_NAME" value="cpu" />
       <option name="MAIN_CLASS_NAME" value="cpu.DecimalTest" />
-      <option name="METHOD_NAME" value="testFloat4" />
+      <option name="METHOD_NAME" value="testFloat1" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DecimalTest.testFloat3" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="2019" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="cpu.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="cpu" />
+      <option name="MAIN_CLASS_NAME" value="cpu.DecimalTest" />
+      <option name="METHOD_NAME" value="testFloat3" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -353,10 +359,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.DecimalTest" />
-        <item itemvalue="JUnit.DecimalTest.testFloat4" />
+        <item itemvalue="JUnit.DecimalTest.testFloat1" />
+        <item itemvalue="JUnit.DecimalTest.testFloat3" />
+        <item itemvalue="Application.TransMethods" />
         <item itemvalue="JUnit.All in 2019" />
-        <item itemvalue="JUnit.BinTest.test3" />
-        <item itemvalue="JUnit.BinTest" />
       </list>
     </recent_temporary>
   </component>
@@ -376,48 +382,49 @@
       <workItem from="1569120974323" duration="9036000" />
       <workItem from="1569160859689" duration="4911000" />
       <workItem from="1569201692614" duration="10809000" />
+      <workItem from="1569222182046" duration="2325000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="BinTest_test3 - 2019.09.23 at 12h 08m 02s.xml">
-      <configuration name="BinTest.test3" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="BinTest - 2019.09.23 at 12h 09m 37s.xml">
-      <configuration name="BinTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="BinTest - 2019.09.23 at 12h 10m 16s.xml">
-      <configuration name="BinTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="BinTest_test3 - 2019.09.23 at 12h 10m 52s.xml">
-      <configuration name="BinTest.test3" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="BinTest_test3 - 2019.09.23 at 12h 12m 47s.xml">
-      <configuration name="BinTest.test3" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="BinTest_test3 - 2019.09.23 at 12h 13m 22s.xml">
-      <configuration name="BinTest.test3" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="All_in_2019 - 2019.09.23 at 12h 14m 18s.xml">
-      <configuration name="All in 2019" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="DecimalTest_testFloat4 - 2019.09.23 at 12h 17m 03s.xml">
-      <configuration name="DecimalTest.testFloat4" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="DecimalTest_testFloat4 - 2019.09.23 at 12h 19m 00s.xml">
-      <configuration name="DecimalTest.testFloat4" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="DecimalTest - 2019.09.23 at 12h 21m 29s.xml">
       <configuration name="DecimalTest" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="All_in_2019 - 2019.09.23 at 15h 15m 35s.xml">
+      <configuration name="All in 2019" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DecimalTest - 2019.09.23 at 15h 17m 44s.xml">
+      <configuration name="DecimalTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DecimalTest_testFloat3 - 2019.09.23 at 15h 24m 18s.xml">
+      <configuration name="DecimalTest.testFloat3" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DecimalTest_testFloat3 - 2019.09.23 at 15h 24m 37s.xml">
+      <configuration name="DecimalTest.testFloat3" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DecimalTest - 2019.09.23 at 15h 25m 35s.xml">
+      <configuration name="DecimalTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DecimalTest_testFloat1 - 2019.09.23 at 15h 30m 28s.xml">
+      <configuration name="DecimalTest.testFloat1" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DecimalTest_testFloat1 - 2019.09.23 at 15h 31m 28s.xml">
+      <configuration name="DecimalTest.testFloat1" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DecimalTest_testFloat1 - 2019.09.23 at 15h 36m 46s.xml">
+      <configuration name="DecimalTest.testFloat1" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DecimalTest_testFloat1 - 2019.09.23 at 15h 38m 30s.xml">
+      <configuration name="DecimalTest.testFloat1" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="40138000" />
+    <option name="totallyTimeSpent" value="42463000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1563" height="886" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2564784" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25980067" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -437,6 +444,7 @@
       <window_info anchor="bottom" id="Terminal" order="10" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.32967034" />
+      <window_info anchor="right" id="Coverage" side_tool="true" weight="0.32956812" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -524,13 +532,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/cpu/TestUnit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1265">
-          <caret line="61" selection-start-line="61" selection-end-line="61" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/java/math/BigInteger.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="606">
@@ -568,13 +569,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/cpu/BinTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="29" column="175" selection-start-line="29" selection-start-column="175" selection-end-line="29" selection-end-column="175" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cpu/present/Number.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
@@ -582,84 +576,100 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cpu/present/transformers/Transformer.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/cpu/present/transformers/Binf_trans.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="16" column="19" lean-forward="true" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/java/lang/Integer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="765" selection-start-line="765" selection-end-line="765" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/java/lang/NumberFormatException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="377">
-          <caret line="64" selection-start-line="64" selection-end-line="64" />
+        <state relative-caret-position="276">
+          <caret line="13" selection-start-line="13" selection-end-line="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/java/lang/String.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
+        <state relative-caret-position="43493">
           <caret line="1962" selection-start-line="1962" selection-end-line="1962" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cpu/present/transformers/Binf_trans.java">
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/java/lang/Integer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="13" selection-start-line="13" selection-end-line="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#829#830#0" expanded="true" />
-            <element signature="e#858#859#0" expanded="true" />
-            <element signature="e#891#892#0" expanded="true" />
-            <element signature="e#921#922#0" expanded="true" />
-            <element signature="e#950#951#0" expanded="true" />
-            <element signature="e#977#978#0" expanded="true" />
-            <element signature="e#1006#1007#0" expanded="true" />
-            <element signature="e#1061#1062#0" expanded="true" />
-            <element signature="e#1089#1090#0" expanded="true" />
-            <element signature="e#1150#1151#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cpu/present/transformers/TransMethods.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="105" column="32" selection-start-line="105" selection-start-column="28" selection-end-line="105" selection-end-column="39" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#357#358#0" expanded="true" />
-            <element signature="e#445#446#0" expanded="true" />
-            <element signature="method#integerToBinComplement#0;class#TransMethods#0" />
-            <element signature="method#integerTo8421BCD#0;class#TransMethods#0" />
-            <element signature="method#BcdtoInteger#0;class#TransMethods#0" />
-            <element signature="method#floatToBinf#0;class#TransMethods#0" />
-            <element signature="method#binComplementToInteger#0;class#TransMethods#0" />
-            <element signature="e#5218#5219#0" expanded="true" />
-            <element signature="e#5250#5251#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="16836">
+          <caret line="765" selection-start-line="765" selection-end-line="765" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cpu/present/transformers/TransformerFactory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
-          <caret line="43" column="18" selection-start-line="43" selection-start-column="18" selection-end-line="43" selection-end-column="18" />
+        <state relative-caret-position="-535">
+          <caret line="19" column="20" lean-forward="true" selection-start-line="19" selection-start-column="20" selection-end-line="19" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cpu/present/transformers/Transformer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="583">
+          <caret line="29" column="9" lean-forward="true" selection-start-line="29" selection-start-column="9" selection-end-line="29" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/cpu/BinTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="307">
+          <caret line="29" column="175" selection-start-line="29" selection-start-column="175" selection-end-line="29" selection-end-column="175" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/java/lang/NumberFormatException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="851">
+          <caret line="64" selection-start-line="64" selection-end-line="64" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/java/math/BigDecimal.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="416">
+          <caret line="1692" selection-start-line="1692" selection-end-line="1692" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="161">
+            <caret line="7" column="106" selection-start-line="7" selection-start-column="106" selection-end-line="7" selection-end-column="106" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/cpu/TestUnit.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-97">
+          <caret line="41" column="22" selection-start-line="41" selection-start-column="22" selection-end-line="41" selection-end-column="22" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/cpu/DecimalTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="101" selection-start-line="101" selection-end-line="101" />
+        <state relative-caret-position="255">
+          <caret line="93" column="30" lean-forward="true" selection-start-line="93" selection-start-column="30" selection-end-line="93" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cpu/present/transformers/TransMethods.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="112" column="41" selection-start-line="112" selection-start-column="41" selection-end-line="112" selection-end-column="41" />
+          <folding>
+            <element signature="method#integerToBinComplement#0;class#TransMethods#0" />
+            <element signature="method#integerTo8421BCD#0;class#TransMethods#0" />
+            <element signature="method#BcdtoInteger#0;class#TransMethods#0" />
+            <element signature="method#floatToBinf#0;class#TransMethods#0" />
+            <element signature="method#binComplementToInteger#0;class#TransMethods#0" />
+          </folding>
         </state>
       </provider>
     </entry>
