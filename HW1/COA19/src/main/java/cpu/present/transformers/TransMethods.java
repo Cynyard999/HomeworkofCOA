@@ -3,12 +3,11 @@ package cpu.present.transformers;
 
 public class TransMethods {
     public static void main(String[] agrs){
-        System.out.println(Integer.MAX_VALUE);
-        System.out.println(Integer.parseInt("-48009508371"));
-
+        System.out.println(Integer.MIN_VALUE);
+        System.out.println(integerToBinComplement("-48009508371"));
     }
 
-    protected static String integerToBinComplement(String code){//整数转补码
+    protected static String integerToBinComplement(String code){//整数转补码,待修改，如果输入的整数大于能表示的最大整数该怎么办
         if (code==null){
             return null;
         }

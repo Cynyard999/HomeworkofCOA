@@ -41,11 +41,11 @@ public class DecimalTest {//传入十进制的整数，中间存储类型为整�
 	}
 
 	@Test
-	public void testInteger4() {
+	public void testInteger4() {//w8421表示有问题,整数不能表示那么大啊
 		TestUnit expected = new TestUnit("-48009508371",  "-48009508371.0",
-				"11111111100000000000000000000000",
-				"11011001010100001000001101110001",
-				"11010010011010010000100111101101");
+				"11111111100000000000000000000000",//这个表示infinity
+				"11011001010100001000001101110001",//这个表示-9508371
+				"11010010011010010000100111101101");//这个表示-764868115
 		ArrayList<PresentType> errs = expected.eq(PresentType.DEC.INTEGER, PresentType.BIN.TWOS_COMPLEMENT, new String[]{"-48009508371"});
 		assertEquals(0, errs.size());
 	}
