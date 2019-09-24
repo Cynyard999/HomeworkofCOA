@@ -22,7 +22,12 @@ public class TransformerFactory {
         if (args.length > 1) {
             eLength = Integer.parseInt(args[1]);
             sLength = Integer.parseInt(args[2]);
-        } else {
+        } else if (storageType.equals(PresentType.BIN.FLOAT)){{
+            eLength = 8;
+            sLength = 23;
+        }
+
+        }else{
             eLength = 0;
             sLength = Number.DATA_SIZE_LIMITATION;
         }

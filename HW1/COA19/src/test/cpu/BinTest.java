@@ -27,8 +27,8 @@ public class BinTest {//传入整数的二进制补码，中间类型为整数�
 
 	@Test
 	public void test3() {//需要二进制浮点数与十进制浮点数的互转
-		TestUnit expected = new TestUnit("-21", "-21.0", "11000001101010000000000000000000","11010000000000000000000000100001", "11111111111111111111111111101011");//下面必须加8，23
-		ArrayList<PresentType> errs = expected.eq(PresentType.BIN.TWOS_COMPLEMENT, PresentType.BIN.TWOS_COMPLEMENT, new Number(/*下面需要十进制浮点数转二进制浮点数*/PresentType.DEC.FLOAT, PresentType.BIN.FLOAT, new Number(PresentType.BIN.TWOS_COMPLEMENT, PresentType.BIN.TWOS_COMPLEMENT, "11111111111111111111111111101011").get(PresentType.DEC.FLOAT),"8","23").get(PresentType.BIN.TWOS_COMPLEMENT));
+		TestUnit expected = new TestUnit("-21", "-21.0", "11000001101010000000000000000000","11010000000000000000000000100001", "11111111111111111111111111101011");//这里没有加8，23
+		ArrayList<PresentType> errs = expected.eq(PresentType.BIN.TWOS_COMPLEMENT, PresentType.BIN.TWOS_COMPLEMENT, new Number(/*下面需要十进制浮点数转二进制浮点数*/PresentType.DEC.FLOAT, PresentType.BIN.FLOAT, new Number(PresentType.BIN.TWOS_COMPLEMENT, PresentType.BIN.TWOS_COMPLEMENT, "11111111111111111111111111101011").get(PresentType.DEC.FLOAT)).get(PresentType.BIN.TWOS_COMPLEMENT));
 		assertEquals(0, errs.size());
 	}
 

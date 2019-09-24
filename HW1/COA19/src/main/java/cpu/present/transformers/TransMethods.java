@@ -1,10 +1,13 @@
 package cpu.present.transformers;
 
 
+import java.math.BigDecimal;
+
 public class TransMethods {
     public static void main(String[] agrs){
-        System.out.println(Integer.MIN_VALUE);
-        System.out.println(integerToBinComplement("-48009508371"));
+        BigDecimal target = new BigDecimal("111");
+        BigDecimal result = new BigDecimal("111");
+        System.out.println(target.divide(result).setScale(5).equals(new BigDecimal("1.00000")));//
     }
 
     protected static String integerToBinComplement(String code){//整数转补码,待修改，如果输入的整数大于能表示的最大整数该怎么办
@@ -108,17 +111,24 @@ public class TransMethods {
             stringBuilder.append('-');
         }
         if (code.substring(1,9).equals("00000000")){//非规约数
+            if (code.substring(9).equals("10000000000000000000000")&sLength==23){
+                return stringBuilder.append(Math.pow(2,-127)).toString();
+            }
             f=Integer.parseInt(code.substring(9),2);
             f=f*(float) Math.pow(2,-149);
             stringBuilder.append(f);
         }
         if (!code.substring(1,9).equals("00000000")){
+            if (code.substring(1,9).equals("11111111")){
+                return stringBuilder.append(Float.MAX_VALUE).toString();
+            }
             f = Integer.parseInt(code.substring(9),2)*(float)Math.pow(2,-sLength);//小数部分
-            f = (f+1)*(float) Math.pow(2,Integer.parseInt(code.substring(1,9),2)-127);
-            if (f>Float.MAX_VALUE){//为了测试用例
+            BigDecimal bigDecimal = new BigDecimal((f+1)*(float) Math.pow(2,Integer.parseInt(code.substring(1,9),2)-127)).setScale(20, BigDecimal.ROUND_DOWN);
+            stringBuilder.append(bigDecimal.toString());
+            if (bigDecimal.floatValue()>Float.MAX_VALUE){//为了测试用例
                 return String.valueOf(Float.MAX_VALUE);
             }
-            stringBuilder.append(f);
+
         }
         return stringBuilder.toString();
     }
