@@ -39,11 +39,7 @@ public class TestUnit {
                 BigDecimal target = new BigDecimal(reals.get(t));
                 BigDecimal result = new BigDecimal(number.get(t));//
                 if (! target.equals(0)) {
-                    System.out.println(target.toString());
-                    System.out.println(result.toString());
-                    System.out.println("-"+1.6328125*Math.pow(2,-20));
                     if (! result.divide(target).setScale(5).equals(new BigDecimal("1.00000"))) {//尝试把1.00000变为字符串形式
-
                         errList.add(t);
                     }
                 } else {

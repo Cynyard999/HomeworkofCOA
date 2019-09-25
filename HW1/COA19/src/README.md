@@ -2,6 +2,7 @@
 * 构造number的对象，传入三个参数到number的构造函数，构造函数调用TransformerFactory的getTransformer方法，将原本是rawtype的code，变成storagtype的code，然后将转变后的code的类型以及code存在一个new transformer对象里，再返回给Number的构造函数，变为number对象的实例变量transformer，即完成了从初始type到中间type的转变
 * 之后再通过number的方法get(type)将中间类型的code转变成目标类型，也就是传入的type类型的code，并且返回这个转变好了的code，注意在测试用例中，利用了for结构，即需要将一个storagetype的code，转变为其他四个type的code与本身type的code。
 
+
 # 几处test的问题
 
 ---
