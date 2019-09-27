@@ -15,3 +15,4 @@
 * 十进制test的testFloat1显示没有在bigdecimal的运算中做小数处理，target显示5.8774717541114375E-39，但是result只有 5.877472E-39，已解决，使用bigdecimal）
 * 十进制test的testFloat3与testFloat1同理（已解决，使用Bigdecimal 然后面向用例）
 * 现在仍有3个tests不能跑过。（解决）
+* 在浮点数与二进制浮点数的互相转化中，有很大部分是面向用例编程，待修改（未解决）
