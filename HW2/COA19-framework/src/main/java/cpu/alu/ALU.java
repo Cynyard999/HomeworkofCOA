@@ -1,5 +1,7 @@
 package cpu.alu;
 
+import transformer.Transformer;
+
 /**
  * Arithmetic Logic Unit
  * ALU封装类
@@ -63,13 +65,17 @@ public class ALU {
         }
         return String.valueOf(temp);
     }
+    char not(char a){
+        return a=='1'?'0':'1';
+    }
     //add two integer
     String add(String src, String dest) {
-        char [] sum = new char[32];
+        int length = src.length();
+        char [] sum = new char[length];
         char c ='0';
         char x=0;
         char y=0;
-        for (int i=31;i>=0;i--){
+        for (int i=length-1;i>=0;i--){
             x = src.charAt(i);
             y = dest.charAt(i);
             char temp = x==y?'0':'1';
@@ -77,7 +83,7 @@ public class ALU {
             c = or(and(x,c),and(y,c),and(x,y));
         }
         if (x==y&x!=sum[0]){
-            return "overflow";
+            return or(and(x,y,not(sum[0])),and(not(x),not(y),sum[0]))+String.valueOf(sum);//产生了overflow
         }
 		return String.valueOf(sum);
     }
@@ -93,8 +99,22 @@ public class ALU {
 
     //signed integer mod,dest%src,//余数的符号与被除数相同
     String imod(String src, String dest) {
-
-		return null;
+        return new Transformer().intToBinary(String.valueOf(binaryToInt(dest)%binaryToInt(src)));
+    }
+    int binaryToInt(String code) {
+        if (code==null){
+            return 0;
+        }
+        if(code.charAt(0)=='0'){
+            return Integer.parseInt(code,2);
+        }
+        //如果表示的是负数
+        char[] numbers = code.toCharArray();
+        for (int i=0;i<32;i++){
+            numbers[i] = numbers[i]=='0'?'1':'0';//取反
+        }
+        int inversedNumber = Integer.parseInt(String.valueOf(numbers),2)+1;
+        return 0-inversedNumber;
     }
 
     String xor(String src, String dest) {
@@ -106,30 +126,32 @@ public class ALU {
     }
 
     String shl(String src, String dest) {//逻辑左移,src移动位数
-        char[] result = new char[32];
+        char[] result = new char[dest.length()];
+        int length = dest.length();
         int l = Integer.parseInt(src,2);
-        if (l>32){
+        if (l>length){
             return "00000000000000000000000000000000";
         }
-        for (int i=31;i>31-l;i--){
+        for (int i=length-1;i>length-1-l;i--){
             result[i]='0';
         }
-        for (int i =0;i<=31-l;i++){
+        for (int i =0;i<=length-1-l;i++){
             result[i] = dest.charAt(i+l);
         }
 		return String.valueOf(result);
     }
 
     String shr(String src, String dest) {//逻辑右移
-        char[] result = new char[32];
+        int length = dest.length();
+        char[] result = new char[length];
         int l = Integer.parseInt(src,2);
-        if (l>32){
+        if (l>length){
             return "00000000000000000000000000000000";
         }
         for (int i=0;i<l;i++){
             result[i]='0';
         }
-        for (int i =l;i<=31;i++){
+        for (int i =l;i<=length-1;i++){
             result[i] = dest.charAt(i-l);
         }
         return String.valueOf(result);
@@ -140,7 +162,8 @@ public class ALU {
     }
 
     String sar(String src, String dest) {//算术右移
-        char[] result = new char[32];
+        int length = dest.length();
+        char[] result = new char[length];
         int l = Integer.parseInt(src,2);
         if (l>32){
             return "00000000000000000000000000000000";
