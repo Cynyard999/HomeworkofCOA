@@ -1,5 +1,6 @@
 package cpu.alu;
 
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import transformer.Transformer;
 
 /**
@@ -14,6 +15,22 @@ public class ALU {
 
     // 模拟寄存器中的溢出标志位
     private String OF = "0";
+
+    public void setOF(String OF) {
+        this.OF = OF;
+    }
+
+    public void setCF(String CF) {
+        this.CF = CF;
+    }
+
+    public String getCF() {
+        return CF;
+    }
+
+    public String getOF() {
+        return OF;
+    }
 
     //与计算 overload
     char and(char i,char j){
@@ -59,8 +76,8 @@ public class ALU {
 
     //取反操作
     String not(String str){
-        char[] temp = new char[32];
-        for (int i=0;i<32;i++){
+        char[] temp = new char[str.length()];
+        for (int i=0;i<str.length();i++){
             temp[i] = str.charAt(i)=='1'?'0':'1';
         }
         return String.valueOf(temp);
@@ -68,8 +85,21 @@ public class ALU {
     char not(char a){
         return a=='1'?'0':'1';
     }
-    //add two integer
+    //取相反数操作
+
+    String findComplement(String str){
+        int length = str.length();
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i=0;i<length-1;i++){
+            stringBuilder.append("0");
+        }
+        stringBuilder.append("1");
+        return add(not(str),stringBuilder.toString());//返回取反+1的值
+    }
+    //add two integer,需要相同长度
     String add(String src, String dest) {
+        setCF("0");//每个add前设置为0
+        setOF("0");
         int length = src.length();
         char [] sum = new char[length];
         char c ='0';
@@ -82,8 +112,15 @@ public class ALU {
             sum[i] = temp==c?'0':'1';
             c = or(and(x,c),and(y,c),and(x,y));
         }
+        if (c=='1'){
+            setCF("1");
+        }
         if (x==y&x!=sum[0]){
-            return or(and(x,y,not(sum[0])),and(not(x),not(y),sum[0]))+String.valueOf(sum);//产生了overflow
+            setOF("1");
+            if (getCF().equals("1"))
+                return c+String.valueOf(sum);
+            //产生了overflow
+            return String.valueOf(sum);
         }
 		return String.valueOf(sum);
     }
@@ -94,7 +131,7 @@ public class ALU {
         if (src.equals(dest)){
             //return "00000000000000000000000000000000";
         }
-		return add(dest,add(not(src),"00000000000000000000000000000001"));
+		return add(dest,findComplement(src));
 	}
 
     //signed integer mod,dest%src,//余数的符号与被除数相同
@@ -129,8 +166,12 @@ public class ALU {
         char[] result = new char[dest.length()];
         int length = dest.length();
         int l = Integer.parseInt(src,2);
-        if (l>length){
-            return "00000000000000000000000000000000";
+        if (l>=length){//移动长度大于本身长度
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int i=0;i<length;i++){
+                stringBuilder.append("0");
+            }
+            return stringBuilder.toString();
         }
         for (int i=length-1;i>length-1-l;i--){
             result[i]='0';
@@ -145,8 +186,12 @@ public class ALU {
         int length = dest.length();
         char[] result = new char[length];
         int l = Integer.parseInt(src,2);
-        if (l>length){
-            return "00000000000000000000000000000000";
+        if (l>=length){//移动长度大于本身长度
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int i=0;i<length;i++){
+                stringBuilder.append("0");
+            }
+            return stringBuilder.toString();
         }
         for (int i=0;i<l;i++){
             result[i]='0';
