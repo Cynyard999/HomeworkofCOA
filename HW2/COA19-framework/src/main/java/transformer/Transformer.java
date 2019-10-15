@@ -327,6 +327,7 @@ public class Transformer {
         return exponent;
     }
 
+	
     /**
      * convert a number to its implement representation
      * @param number a num to be converted
