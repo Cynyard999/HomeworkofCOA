@@ -117,7 +117,6 @@ public class ALU {
         }
         if (x==y&x!=sum[0]){
             setOF("1");
-
         }
 		return String.valueOf(sum);
     }
@@ -207,41 +206,45 @@ public class ALU {
         int length = dest.length();
         char[] result = new char[length];
         int l = Integer.parseInt(src,2);
-        if (l>32){
-            return "00000000000000000000000000000000";
+        if (l>length){
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int i=0;i<length;i++){
+                stringBuilder.append(0);
+            }
+            return stringBuilder.toString();
         }
         for (int i=0;i<l;i++){
             result[i]=dest.charAt(0)=='1'?'1':'0';
         }
-        for (int i =l;i<=31;i++){
+        for (int i =l;i<=length-1;i++){
             result[i] = dest.charAt(i-l);
         }
         return String.valueOf(result);
     }
 
     String rol(String src, String dest) {//循环左移
-        char[] result = new char[32];
+        char[] result = new char[dest.length()];
         int l = Integer.parseInt(src,2);
-        while (l>=32)
-            l-=32;
-        for (int i=31;i>31-l;i--){
-            result[i]=dest.charAt(i-32+l);
+        while (l>=dest.length())
+            l-=dest.length();
+        for (int i=dest.length()-1;i>dest.length()-1-l;i--){
+            result[i]=dest.charAt(i-dest.length()+l);
         }
-        for (int i =0;i<=31-l;i++){
+        for (int i =0;i<=dest.length()-1-l;i++){
             result[i] = dest.charAt(i+l);
         }
         return String.valueOf(result);
     }
 
     String ror(String src, String dest) {//循环右移
-        char[] result = new char[32];
+        char[] result = new char[dest.length()];
         int l = Integer.parseInt(src,2);
-        while (l>=32)
-            l-=32;
+        while (l>=dest.length())
+            l-=dest.length();
         for (int i=0;i<l;i++){
-            result[i]=dest.charAt(31-i);
+            result[i]=dest.charAt(dest.length()-1-i);
         }
-        for (int i =l;i<=31;i++){
+        for (int i =l;i<=dest.length()-1;i++){
             result[i] = dest.charAt(i-l);
         }
         return String.valueOf(result);
