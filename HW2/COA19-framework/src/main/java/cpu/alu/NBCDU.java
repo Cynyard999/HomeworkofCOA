@@ -72,7 +72,6 @@ public class NBCDU {
 			return add(b,opposite(a));//b-(-a)=b+a
 		}
 		else{//b-a
-			System.out.println(1);
 			StringBuilder stringBuilder = new StringBuilder(a.substring(0,4));
 			for (int i=1;i<8;i++){
 				String c = complement(a.substring(4*i,4*i+4));
@@ -96,16 +95,8 @@ public class NBCDU {
 		String resultTwo;
 		if (Integer.parseInt(resultOne,2)>9||CF.equals("1")) {//可能有进位可能没有进位
 			setCF("1");//加了6必定有进位啊
-			if (alu.getOF().equals("1")) {//此时resultone为5位数
-				resultTwo = alu.add(resultOne, "00110");
-				return resultTwo.substring(1);
-			} else {
-				resultTwo = alu.add(resultOne, "0110");
-				if (alu.getOF().equals("1")){
-					return resultTwo.substring(1);//如果变成了五位数
-				}
-				else return resultTwo;
-			}
+			resultTwo = alu.add(resultOne, "0110");
+			return resultTwo;
 		}
 		return resultOne;
 	}
