@@ -15,11 +15,18 @@ public class FPU {
     class SMA{//包含了符号以及significand
         String sign;
         String significand;
+        boolean significand_CF = false;
+        void setSignificand_CF(){
+            significand_CF = true;// 加法后的significand有进位
+        }
         void setSign(String sign){
             this.sign = sign;
         }
         void setSignificand(String significand){
             this.significand = significand;
+        }
+        boolean isSignificand_CF(){
+            return significand_CF;
         }
         String getSign(){
             return sign;
@@ -107,7 +114,8 @@ public class FPU {
             String tempSignificand = alu.add(significandA,significandB);
             sma.setSignificand(tempSignificand);
             if (alu.getCF()=="1"){
-                sma.setSignificand("1"+tempSignificand);
+                sma.setSignificand_CF();
+                sma.setSignificand(tempSignificand);
             }
         }
         else {
@@ -124,7 +132,7 @@ public class FPU {
                 }
                 //有溢出有进位
                 else {
-                    sma.setSignificand(tempSignificand.substring(1));//减去第一位的进位
+                    sma.setSignificand(tempSignificand);//
                 }
             }
         }
@@ -134,19 +142,19 @@ public class FPU {
         ALU alu = new ALU();
         StringBuilder stringBuilder = new StringBuilder(sma.getSign());
         String significand = sma.getSignificand();
-        if (significand.charAt(0)=='1'&significand.length()>32){//加法产生的进位，significand除以2，相应指数增加
+        if (sma.isSignificand_CF()){//加法产生的进位，significand除以2，相应指数增加
             stringBuilder.append(alu.add("00000001",exponent));
             if (alu.add("00000001",exponent).equals("11111111")){
                 stringBuilder.append("00000000000000000000000");//INF
                 return stringBuilder.toString();
             }
             if (significand.substring(25,26).equals("0")){//没有四舍五入
-                String a = significand.substring(1,24);//取23位，把第一位隐藏位舍去
+                String a = significand.substring(0,23);//取23位
                 stringBuilder.append(a);
             }
             if (significand.substring(25,26).equals("1")){
                 significand = alu.add(significand,"00000000000000000000000100000000");//有四舍五入
-                String a = significand.substring(1,24);//取23位，把第一位隐藏位舍去
+                String a = significand.substring(0,23);//取23位
                 stringBuilder.append(a);
             }
             return stringBuilder.toString();
@@ -160,7 +168,7 @@ public class FPU {
         if (significand.substring(i+24,i+25).equals("1")&significand.substring(i+23,i+24).equals("0")){//这里有点问题？？
             significand = alu.add(significand,"00000000000000000000000100000000");//四舍五入
         }
-        String a = significand.substring(i+1,i+24);//取22位
+        String a = significand.substring(i+1,i+24);//取23位
         stringBuilder.append(a);
         return stringBuilder.toString();
     }

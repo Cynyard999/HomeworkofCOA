@@ -117,10 +117,7 @@ public class ALU {
         }
         if (x==y&x!=sum[0]){
             setOF("1");
-            if (getCF().equals("1"))
-                return c+String.valueOf(sum);
-            //产生了overflow
-            return String.valueOf(sum);
+
         }
 		return String.valueOf(sum);
     }
