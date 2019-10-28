@@ -265,11 +265,10 @@ public class ALU {
 
 
 	String product;
-
+	String Y;
 	public void setProduct(String product) {
 		this.product = product;
 	}
-	String Y;
 	public void setY(String y) {
 		Y = y;
 	}
@@ -280,8 +279,6 @@ public class ALU {
 		setProduct(sar("01",stringBuilder1.toString()).substring(0,32));
 		setY(sar("01",stringBuilder1.toString()).substring(32));
 	}
-
-
 	String mul (String src, String dest){//x*y
 	    int times = src.length();
 		StringBuilder stringBuilder = new StringBuilder(dest);

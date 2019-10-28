@@ -39,7 +39,7 @@ public class FPU {
             fractionX = "0"+a.substring(9)+"0000";
         }
         if (b.substring(1,9).equals("00000000")){
-            fractionY = "0"+b.substring(9)+"0000";
+            fractionY = "0"+b.substring(9)+"0000";//保护位
             b_Isregular = false;
         }
         //先相加，再减去127(化成9位补码的加减）
@@ -58,7 +58,7 @@ public class FPU {
         }
 
         stringBuilder.append(exponent.substring(1));
-        String productAndY = "0000000000000000000000000000"+fractionY;//保护位
+        String productAndY = "0000000000000000000000000000"+fractionY;
         for (int i=0;i<28;i++){
             if (productAndY.endsWith("0")){
                 productAndY = alu.shr("01",productAndY);//逻辑右移
