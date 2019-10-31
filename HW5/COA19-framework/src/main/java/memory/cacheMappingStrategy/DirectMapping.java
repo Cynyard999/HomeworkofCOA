@@ -15,8 +15,10 @@ public class DirectMapping extends MappingStrategy{
      */
     @Override
     public char[] getTag(int blockNO) {
-        // TODO
-        return null;
+        char[] tag;
+        String addr = getAddress(blockNO);
+        tag = (addr.substring(0,12)+"0000000000").toCharArray();//直接映射需要添加tag后面的位数
+        return tag;
     }
 
 
@@ -27,7 +29,12 @@ public class DirectMapping extends MappingStrategy{
      */
     @Override
     public int map(int blockNO) {
-        // TODO
+        char [] tags = getTag(blockNO);
+        int rowNumber = blockNO%1024;
+        char [] rowtags = cache.getLineTags(rowNumber);
+        if (tags == rowtags){
+            return rowNumber;
+        }
         return -1;
     }
 
@@ -38,8 +45,12 @@ public class DirectMapping extends MappingStrategy{
      */
     @Override
     public int writeCache(int blockNO) {
-        // TODO
-        return -1;
+        String addr = getAddress(blockNO);
+        char [] data = memory.read(addr,1024);
+        char [] tag = getTag(blockNO);
+        int rowNO = blockNO%1024;
+        cache.updateLine(rowNO,data,tag);
+        return rowNO;
     }
 
 

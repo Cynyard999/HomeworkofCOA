@@ -1,5 +1,7 @@
 package memory;
-
+/*Todo 在Cache类中实现fetch方法将数据从内存读到Cache(如果还没有加载到Cache)
+	* Todo 并返回被更新的Cache行的行号(需要调用不同的映射策略和替换策略)
+ */
 import memory.cacheMappingStrategy.MappingStrategy;
 import memory.cacheReplacementStrategy.ReplacementStrategy;
 import transformer.Transformer;
@@ -16,7 +18,7 @@ public class Cache {	//
 
 	public static final int CACHE_SIZE_B = 1 * 1024 * 1024;      // 1 MB 总大小
 
-	public static final int LINE_SIZE_B = 1 * 1024; // 1 KB
+	public static final int LINE_SIZE_B = 1 * 1024; // 1 KB,
 
 	private CacheLinePool cache = new CacheLinePool(CACHE_SIZE_B/LINE_SIZE_B); 	// 总大小1MB / 行大小1KB = 1024个行
 
@@ -30,17 +32,45 @@ public class Cache {	//
 
 	private MappingStrategy mappingStrategy;
 
+	public char[] getLineTags(int rowNum){
+		return cache.get(rowNum).getTag();
+	}
+	public void updateLine(int rowNum,char[] newData,char[] newTag){
+		cache.get(rowNum).data = newData;
+		cache.get(rowNum).validBit = true;
+		cache.get(rowNum).tag = newTag;
+		cache.num_of_block_put_in+=1;
+		cache.get(rowNum).timeStamp = cache.num_of_block_put_in;
+	}
+	public Long getLineTimeStamp(int rowNum){
+		return cache.get(rowNum).timeStamp;
+	}
+	public int getLineVisited(int rowNum){
+		return cache.get(rowNum).visited;
+	}
+	public void setLineTimeStamp(int rowNum,Long newStamp){
+		cache.get(rowNum).timeStamp = newStamp;
+	}
+	public Long getTimeStamp(){
+		return cache.num_of_block_put_in;
+	}
 	/**
 	 * 查询{@link Cache#cache}表以确认包含[sAddr, sAddr + len)的数据块是否在cache内
 	 * 如果目标数据块不在Cache内，则将其从内存加载到Cache
 	 * @param sAddr 数据起始点(32位物理地址 = 22位块号 + 10位块内地址)
 	 * @param len 待读数据的字节数，[sAddr, sAddr + len)包含的数据必须在同一个数据块内
 	 * @return 数据块在Cache中的对应行号
+	 * 返回对应的行号，在cache内，直接返回，不在cache内替换，然后返回
 	 */
-	public int fetch(String sAddr, int len) {
-		// TODO
-		return -1;
+	public int fetch(String sAddr, int len) {//返回块号
+		int blockNO = getBlockNO(sAddr);
+		if (mappingStrategy.map(blockNO) == -1) {
+			return mappingStrategy.writeCache(blockNO);
+		} else {//如果在cache中有需要的行
+			return mappingStrategy.map(blockNO);
+		}
 	}
+
 
 	/**
 	 * 读取[eip, eip + len)范围内的连续数据，可能包含多个数据块的内容
@@ -55,15 +85,15 @@ public class Cache {	//
 		int upperBound = addr + len;
 		int index = 0;
 		while (addr < upperBound) {
-			int nextSegLen = LINE_SIZE_B - (addr % LINE_SIZE_B);
-			if (addr + nextSegLen >= upperBound) {
+			int nextSegLen = LINE_SIZE_B - (addr % LINE_SIZE_B);//剩下部分的长度，即一直到这个块的结束
+			if (addr + nextSegLen >= upperBound) {//多个块的情况，先读第一个块
 				nextSegLen = upperBound - addr;
 			}
-			int rowNO = fetch(t.intToBinary(String.valueOf(addr)), nextSegLen);
+			int rowNO = fetch(t.intToBinary(String.valueOf(addr)), nextSegLen);//首地址以及读取的数据数量，给出此时cache的行的标号
 			char[] cache_data = cache.get(rowNO).getData();
 			int i=0;
 			while (i < nextSegLen) {
-				data[index] = cache_data[addr % LINE_SIZE_B + i];
+				data[index] = cache_data[addr % LINE_SIZE_B + i];//index的值一直增加的
 				index++;
 				i++;
 			}
@@ -144,11 +174,13 @@ public class Cache {	//
 	 * 负责对CacheLine进行动态初始化
 	 */
 	private class CacheLinePool {
+		Long num_of_block_put_in;
 		/**
 		 * @param lines Cache的总行数
 		 */
 		CacheLinePool(int lines) {
 			clPool = new CacheLine[lines];
+			num_of_block_put_in = 0L;
 		}
 		private CacheLine[] clPool;
 		private CacheLine get(int lineNO) {
@@ -175,7 +207,7 @@ public class Cache {	//
 		int visited = 0;
 
 		// 用于LRU和FIFO算法，记录该条数据时间戳
-		Long timeStamp = 0l;
+		Long timeStamp = 0L;//最小的最先出去
 
 		// 标记，占位长度为()22位，有效长度取决于映射策略：
 		// 直接映射: 12 位

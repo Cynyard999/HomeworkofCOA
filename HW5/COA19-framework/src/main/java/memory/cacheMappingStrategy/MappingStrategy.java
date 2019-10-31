@@ -1,9 +1,14 @@
 package memory.cacheMappingStrategy;
 
+import memory.Cache;
+import memory.Memory;
 import memory.cacheReplacementStrategy.ReplacementStrategy;
+import transformer.Transformer;
 
 public abstract class MappingStrategy {
-
+	Memory memory = Memory.getMemory();
+	Transformer transformer = new Transformer();
+	Cache cache = Cache.getCache();
 	protected ReplacementStrategy replacementStrategy;
 
 	public void setReplacementStrategy(ReplacementStrategy replacementStrategy) {
@@ -31,4 +36,10 @@ public abstract class MappingStrategy {
 	 * @return 返回cache中所对应的行
 	 */
 	public abstract int writeCache(int blockNO);
+	/**
+	 * 得到提供的块号的address
+	 */
+	public String getAddress(int blockNO){
+		return transformer.intToBinary(String.valueOf(blockNO*(int)Math.pow(2,10)));//得到块的首地址，32位
+	}
 }

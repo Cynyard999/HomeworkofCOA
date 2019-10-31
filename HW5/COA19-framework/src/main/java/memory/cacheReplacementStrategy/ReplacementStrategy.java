@@ -1,6 +1,11 @@
 package memory.cacheReplacementStrategy;
 
+import memory.Cache;
+import memory.Memory;
+
 public abstract class ReplacementStrategy {
+    Cache cache = Cache.getCache();
+    Memory memory = Memory.getMemory();
 
     /**
      * 在start-end范围内查找是否命中
