@@ -272,11 +272,7 @@ public class ALU {
         this.remainderSign = remainderSign;
     }
     private void changeRemainderSign() {
-        if (remainder.equals("00000000000000000000000000000000")) {
-            setRemainderSign('1');
-        } else {
             setRemainderSign(remainder.charAt(0));
-        }
     }
 
     public void setQuotient_0(String quotient_0) {
@@ -353,6 +349,10 @@ public class ALU {
             else setRemainder(sub(divisor,remainder));
         }
         StringBuilder a = new StringBuilder(OF) ;
+        if (new ALU().add(remainder,divisor).equals("00000000000000000000000000000000")){
+            setQuotient(new ALU().sub("00000000000000000000000000000001",quotient));
+            setRemainder("00000000000000000000000000000000");
+        }
         a.append(quotient);
         a.append(remainder);
         return a.toString();
