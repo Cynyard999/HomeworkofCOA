@@ -33,18 +33,18 @@ public class SetAssociativeMapping extends MappingStrategy{
         char [] tag = getTag(blockNO);
         //在所有的cache内没有找到
         //模256找到组数，再乘以4找到这个组在cache中开头的行号
-        if (replacementStrategy.isHit((blockNO%256)*4,(blockNO%256)*4+4,tag)==-1){//如果没有找到
+        if (replacementStrategy.isHit((blockNO%256)*4,(blockNO%256)*4+3,tag)==-1){//如果没有找到
             return -1;
         }
         else
-            return replacementStrategy.isHit((blockNO%256)*4,(blockNO%256)*4+4,tag);//找到
+            return replacementStrategy.isHit((blockNO%256)*4,(blockNO%256)*4+3,tag);//找到
     }
 
     @Override
     public int writeCache(int blockNO) {
         String addr = getAddress(blockNO);
         char [] data = memory.read(addr,1024);
-        return replacementStrategy.writeCache((blockNO%256)*4,(blockNO%256)*4+4,getTag(blockNO),data);
+        return replacementStrategy.writeCache((blockNO%256)*4,(blockNO%256)*4+3,getTag(blockNO),data);
     }
 }
 

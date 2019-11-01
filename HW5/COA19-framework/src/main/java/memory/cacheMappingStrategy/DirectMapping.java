@@ -4,6 +4,8 @@ import memory.Cache;
 import memory.Memory;
 import transformer.Transformer;
 
+import java.util.Arrays;
+
 /**
  * 直接映射 12位标记 + 10位块号 + 10位块内地址
  */
@@ -32,7 +34,7 @@ public class DirectMapping extends MappingStrategy{
         char [] tags = getTag(blockNO);
         int rowNumber = blockNO%1024;
         char [] rowtags = cache.getLineTags(rowNumber);
-        if (tags == rowtags){
+        if (Arrays.equals(tags,rowtags) &&cache.getLineValid(rowNumber)){
             return rowNumber;
         }
         return -1;

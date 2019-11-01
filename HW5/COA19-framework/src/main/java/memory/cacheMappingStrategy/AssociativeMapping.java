@@ -25,8 +25,9 @@ public class AssociativeMapping extends MappingStrategy {  // 全相联映射
         if (replacementStrategy.isHit(0,1023,tag)==-1){//如果没有找到
             return -1;
         }
-        else
-        return replacementStrategy.isHit(0,1023,tag);//找到
+        else {
+            return replacementStrategy.isHit(0, 1023, tag);//找到
+        }
     }
 
     @Override

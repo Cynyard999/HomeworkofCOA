@@ -41,6 +41,7 @@ public class Cache {	//
 		cache.get(rowNum).tag = newTag;
 		cache.num_of_block_put_in+=1;
 		cache.get(rowNum).timeStamp = cache.num_of_block_put_in;
+		cache.get(rowNum).visited =1;//刚加入的话，只被使用了一次，那么他的visited为1
 	}
 	public Long getLineTimeStamp(int rowNum){
 		return cache.get(rowNum).timeStamp;
@@ -51,8 +52,14 @@ public class Cache {	//
 	public void setLineTimeStamp(int rowNum,Long newStamp){
 		cache.get(rowNum).timeStamp = newStamp;
 	}
+	public void increaseLineVisited(int rowNum){
+		cache.get(rowNum).visited+=1;
+	}
 	public Long getTimeStamp(){
 		return cache.num_of_block_put_in;
+	}
+	public boolean getLineValid(int rawNum){
+		return cache.get(rawNum).validBit;
 	}
 	/**
 	 * 查询{@link Cache#cache}表以确认包含[sAddr, sAddr + len)的数据块是否在cache内

@@ -2,8 +2,11 @@ package memory.cacheReplacementStrategy;
 
 import memory.Cache;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 /**
- * 最近最少用算法
+ * 最近最少用算法，与fifo相差不多，但是每次hit过后，就更新一下这一行的 使用率
  */
 public class LRUReplacement extends ReplacementStrategy {
 
@@ -16,8 +19,8 @@ public class LRUReplacement extends ReplacementStrategy {
     public int isHit(int start, int end,char[] addrTag) {
         for (int i=start;i<=end;i++){
             char[] tag = cache.getLineTags(i);
-            if (tag==addrTag){
-                cache.setLineTimeStamp(i,cache.getTimeStamp());//将这一行的使用更新
+            if (Arrays.equals(tag,addrTag) &&cache.getLineValid(i)){
+                cache.setLineTimeStamp(i,cache.getTimeStamp()+1);//将这一行的使用更新
                 return i;
             }
         }
@@ -38,11 +41,11 @@ public class LRUReplacement extends ReplacementStrategy {
         int row_to_be_updated = start;
         Long rowNO  = cache.getLineTimeStamp(start);//将要被更新的行数的stamp
         for (int i = start;i<=end;i++){
-            if (cache.getLineTimeStamp(i)==0L){
+            if (cache.getLineTimeStamp(i)==0L||(!cache.getLineValid(i))){//如果遇到了无效的数据
                 row_to_be_updated = i;
                 break;
             }
-            if (rowNO>=cache.getLineTimeStamp(i)){//如果遇到了比他更小的stamp
+            if (rowNO>cache.getLineTimeStamp(i)){//如果遇到了比他更小的stamp
                 rowNO = cache.getLineTimeStamp(i);//更新即将被淘汰的行号
                 row_to_be_updated = i;
             }
