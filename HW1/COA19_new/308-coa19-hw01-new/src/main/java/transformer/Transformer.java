@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 public class Transformer {
     public static void main(String[] args){
         Transformer transformer = new Transformer();
-        System.out.println(transformer.floatToBinary("-3.4E39"));
+        System.out.println(transformer.floatToBinary("32.9375"));
     }
 
     /**

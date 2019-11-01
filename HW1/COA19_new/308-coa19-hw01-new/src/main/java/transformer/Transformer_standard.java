@@ -1,6 +1,10 @@
 package transformer;
 
-public class Transformer {
+public class Transformer_standard {
+    public static void main(String[] args){
+        Transformer_standard transformer1 = new Transformer_standard();
+        System.out.println(transformer1.intToBinary("-127"));
+    }
     /**
      * Integer to BinaryString
      *
