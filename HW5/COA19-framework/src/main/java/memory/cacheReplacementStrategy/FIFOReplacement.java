@@ -7,6 +7,11 @@ import java.util.Arrays;
 
 /**
  * 先进先出算法
+ * 没有数据的行的stamp为0
+ * stamp越小，说明越先进入cache
+ * stamp可以理解为数据放进来的先后顺序，所以在cachePool中添加了变量raw_put_in记录添加进来的行的数量
+ * 每次往行内添加数据的时候，cachePool中的记录变量加一，同时将这一行的数据更新，stamp更新为记录变量
+ *
  */
 public class FIFOReplacement extends ReplacementStrategy {
 

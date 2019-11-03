@@ -6,7 +6,8 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 
 /**
- * 最近最少用算法，与fifo相差不多，但是每次hit过后，就更新一下这一行的 使用率
+ * 最近最少用算法，与fifo相差不多，但是每次hit过后，就更新一下这一行的 使用率，
+ * 没有数据的行的stamp为0
  */
 public class LRUReplacement extends ReplacementStrategy {
 

@@ -110,6 +110,7 @@ public class Cache {	//
 	}
 
 	public void setStrategy(MappingStrategy mappingStrategy, ReplacementStrategy replacementStrategy) {
+		this.clear();
 		this.mappingStrategy = mappingStrategy;
 		this.mappingStrategy.setReplacementStrategy(replacementStrategy);
 	}
@@ -168,9 +169,11 @@ public class Cache {	//
 		for (int i=0; i<lineNOs.length; i++) {
 			CacheLine line = cache.get(lineNOs[i]);
 			if (line.validBit != validations[i]) {
+				System.out.println(1);
 				return false;
 			}
 			if (!Arrays.equals(line.getTag(), tags[i])) {
+				System.out.println(2);
 				return false;
 			}
 		}

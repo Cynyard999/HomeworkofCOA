@@ -18,7 +18,11 @@
 
 * 每个替换策略，每个mapping的具体实现在相应的java文件里
 
-* 测试用例里， direct mapping最后需要clear；
+* 测试用例里， direct mapping最后需要clear或者在setMapping方法中，添加clear；不然在组关联策略里的test1不能通过，因为用例假定的是cache为空的情况
+
+
+
+
 
   ------
 
