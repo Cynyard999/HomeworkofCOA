@@ -13,16 +13,29 @@
 MMU（Memory Management Unit）为本次作业的数据访问接口，其数据流为：
 
 1. 测试用例调用MMU#read()方法使用逻辑地址访问数据
-2. MMU 根据 Memory 的管理策略将逻辑地址转换成 Memory 的物理地址
-3. MMU 调用 Memory#load() 确保待读数据一定在内存中
+2. MMU 根据 Memory 的管理策略将逻辑地址转换成 Memory 的物理地址，进表查找
+3. MMU 调用 Memory#load() 确保待读数据一定在内存中,(个人的与这个有点出入)
 	3.1 数据未加载到 Memory，访问 Disk
 	3.2 将 Disk 中的数据加载到 Memory
 4. MMU 调用 Memory#read()从内存读取数据
 5. 返回数据给测试用例
 
+---
+补充一些重点
+* 实模式和分段模式下，磁盘物理地址==内存物理地址，段页式下，磁盘物理地址==虚页号 * 页框大小 + 偏移量
+* 分段模式：segSelector标记了段号
+* base：物理基地址
+* disk_base：磁盘基地址
+* limit：限长，就是在alloc方法里的length的二进制的低31位
+* 由于物理地址都存在于段表，页表中，也就是内存中，在内存中新建getPhyAddr的方法
+* 内存机制可能发生变化
+* memory的段的时间越小，越早访问
+* 测试用例Seg部分描述错了
+* memory的read还要用于更新时间戳
 
 
 
+---
 ##### 要求
 
 - 访问 Memory 时需要判断数据是否已被加载到 Memory ，如果没有加载需要从Disk读取数据

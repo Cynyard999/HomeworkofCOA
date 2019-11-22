@@ -3,7 +3,7 @@ package transformer;
 public class Transformer_standard {
     public static void main(String[] args){
         Transformer_standard transformer1 = new Transformer_standard();
-        System.out.println(transformer1.intToBinary("-127"));
+        System.out.println(transformer1.binaryToFloat("01000010110101011000000000000000"));
     }
     /**
      * Integer to BinaryString

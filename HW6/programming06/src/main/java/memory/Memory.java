@@ -3,6 +3,8 @@ package memory;
 import transformer.Transformer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 /**
  * 内存抽象类
@@ -21,7 +23,7 @@ public class Memory {
      * 请实现三种模式下的存储管理方案：
      * 实模式：
      * 		无需管理，该情况下不好判断数据是否已经加载到内存(除非给每个字节建立有效位)，干脆每次都重新读Disk(地址空间不会超过1 MB)
-     * 分段：
+     * 分段： 不足够，先替换，如果能放了，不整理，直接放，如果总空间足够但是不能放，整理了再放
      * 		最先适应 -> 空间不足则判断总剩余空间是否足够 -> 足够则进行碎片整理，将内存数据压缩
      * 													 -> 不足则采用最近使用算法LRU直到总剩余空间足够 -> 碎片整理
      * 段页：
@@ -31,19 +33,21 @@ public class Memory {
 
     public static boolean PAGE = false;
 
-    public static int MEM_SIZE_B = 32 * 1024 * 1024;      // 主存大小 32 MB,2^25nBytes
+    public static int MEM_SIZE_B = 32 * 1024 * 1024;      // 主存大小 32 MB, 2^25 Bytes
 
     public static int PAGE_SIZE_B = 1 * 1024;      // 页大小 1 KB 2^10Bytes
 
     Transformer t = new Transformer();
 
+    public Disk disk = Disk.getDisk();
+
     private static char[] memory = new char[MEM_SIZE_B];
 
-    private static ArrayList<SegDescriptor> segTbl = new ArrayList<>();
+    private static ArrayList<SegDescriptor> segTbl = new ArrayList<>();//段表,长度不固定
 
     private static PageItem[] pageTbl = new PageItem[Disk.DISK_SIZE_B / Memory.PAGE_SIZE_B]; // 页表大小为2^17  128K,一行存储一个页的信息
 
-    private static ReversedPageItem[] reversedPageTbl = new ReversedPageItem[Memory.MEM_SIZE_B / Memory.PAGE_SIZE_B]; // 反向页表大小为2^15   32K
+    private static ReversedPageItem[] reversedPageTbl = new ReversedPageItem[Memory.MEM_SIZE_B / Memory.PAGE_SIZE_B]; // 反向页表大小为2^15   32K，根据每行的信息，可以知道这个页在磁盘中的信息
 
     private static Memory memoryInstance = new Memory();
 
@@ -51,6 +55,41 @@ public class Memory {
 
     public static Memory getMemory() {
         return memoryInstance;
+    }
+
+    public static ArrayList<SegDescriptor> getSegTbl() {
+        return segTbl;
+    }
+
+    //存储memory中每个段的首地址
+
+    private static int size;
+
+    private SegDescriptor findSeg_toBeUpdated(){//找到将要被修改的段
+        Long stamp = segTbl.get(0).timeStamp;
+        SegDescriptor toBeUpdated = segTbl.get(0);
+        for (SegDescriptor s:segTbl){
+            if (s.validBit&&s.timeStamp<stamp){
+                stamp = s.timeStamp;
+                toBeUpdated = s;
+            }
+        }
+        return toBeUpdated;
+    }
+    //修改段表中对应的内容，
+    private void makeInvalid(SegDescriptor s){
+        int start = Integer.parseInt(t.binaryToInt(String.valueOf(s.base)));//段的起始地址
+        int len = Integer.parseInt(t.binaryToInt(String.valueOf(s.limit)));//段的长度
+        size-=len;
+        for (int ptr=0; ptr<len; ptr++) {//这一段的所有数据设置为初始值
+            memory[start+ptr] = '\0';
+        }
+        s.validBit = false;//段更改为不可用
+    }
+
+    private String mem_Defragmentation(){
+        return "";
+
     }
 
     /**
@@ -61,8 +100,67 @@ public class Memory {
      * @return
      */
     public char[] read(String eip, int len){
-        // TODO 读取数据
-        return null;
+        for(SegDescriptor s:segTbl){
+            if (eip.equals(String.valueOf(s.base))){//更新段表里的stamp
+                s.updateTimeStamp();
+            }
+        }
+        char []data = new char[len];
+        int start = Integer.parseInt(new Transformer().binaryToInt(eip));
+        for (int ptr=0; ptr<len; ptr++) {
+            data[ptr] = memory[start+ptr];
+        }
+        return data;
+    }
+
+    /**
+     * 加载磁盘中的数据到内存中，涉及了统计内存大小，替换以及碎片整理
+     * 总空间足够，1. 需要碎片整理 2. 直接存
+     * 总空间不足，需要替换> 1. 替换的段能容纳新的段的数据，最先适应 2. 替换后空间足够，不能容纳新的段的数据> 碎片整理
+     *
+     *
+     * @param memory_base
+     * @param disk_base
+     * @param len
+     * @return
+     */
+    public String load(String memory_base, String disk_base,int len){
+        String newMemory_base = memory_base;
+        if (len+size>MEM_SIZE_B) {//总空间不足够
+            while (len + size > MEM_SIZE_B) {//总空间不够需要一个被替换掉,stamp最小的，即很久没有访问过的，将这个段写到新分配的内存地址中，修改段表
+                SegDescriptor s = findSeg_toBeUpdated();
+                makeInvalid(s);
+                if (len <= Integer.parseInt(String.valueOf(s.limit))) {//最先适应
+                    newMemory_base = String.valueOf(s.base);
+                    write(newMemory_base, len, disk.read(disk_base, len));
+                    return newMemory_base;
+                }
+            }
+            //跳出while说明替换完了，但是并没有直接能进入的内存，那么开始整理,得到内存开始为空的首地址
+            newMemory_base = mem_Defragmentation();
+            write(newMemory_base, len, disk.read(disk_base, len));
+            return newMemory_base;
+        }
+
+        //总空间足够：
+        write(newMemory_base, len, disk.read(disk_base, len));
+        return newMemory_base;
+    }
+
+    public String getPhysicalAddr(String logicAddr,int len){
+        String physicaoAddr = "";
+        if (SEGMENT&&!PAGE){//只分段
+            int segSelector = Integer.parseInt(t.binaryToInt("0"+logicAddr.substring(0,13)));
+            SegDescriptor segDescriptor = segTbl.get(segSelector);//通过段号获得段描述符
+            if (!segDescriptor.validBit){//内存中没有这个段
+                String disk_base = String.valueOf(segDescriptor.getDisk());//得到段在磁盘中的地址
+                String base = String.valueOf(segDescriptor.getBase());//得到段在内存中分配的地址
+                base = load(base,disk_base,len);
+                return base;//得到新的在内存中的地址
+            }
+        }
+
+        return physicaoAddr;
     }
 
     public void write(String eip, int len, char []data){
@@ -71,6 +169,7 @@ public class Memory {
         //     write方法只用于测试用例中的下层存储修改数据导致上层存储数据失效，Disk.write同理
 //        Cache.getCache().invalid(eip, len);
         // 更新数据
+        size+=len;
         int start = Integer.parseInt(new Transformer().binaryToInt(eip));
         for (int ptr=0; ptr<len; ptr++) {
             memory[start + ptr] = data[ptr];
@@ -95,7 +194,7 @@ public class Memory {
         sd.setBase(eip.toCharArray());
         sd.setLimit(t.intToBinary(String.valueOf(len)).substring(1, 32).toCharArray());
         sd.setValidBit(isValid);
-        Memory.segTbl.add(segSelector, sd);
+        Memory.segTbl.add(segSelector,sd);
     }
 
     /**
@@ -173,7 +272,7 @@ public class Memory {
 
         public char[] getBase() {
             return base;
-        }
+        }//返回内存中的基地址
 
         public void setBase(char[] base) {
             this.base = base;
@@ -181,7 +280,7 @@ public class Memory {
 
         public char[] getDisk() {
             return disk_base;
-        }
+        }//返回磁盘中的基地址
 
         public void setDisk(char[] base) {
             this.disk_base = base;
@@ -209,7 +308,7 @@ public class Memory {
 
         public void updateTimeStamp() {
             this.timeStamp = System.currentTimeMillis();
-        }
+        }//返回当前时间
     }
 
 

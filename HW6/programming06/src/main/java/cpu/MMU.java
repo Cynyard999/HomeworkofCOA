@@ -3,6 +3,8 @@ package cpu;
 import memory.Memory;
 import transformer.Transformer;
 
+import java.util.ArrayList;
+
 
 /**
  * MMU接收一个48-bits的逻辑地址，并最终将其转换成32-bits的物理地址
@@ -35,6 +37,7 @@ public class MMU {
 
 	Transformer t = new Transformer();
 
+
 	/**
 	 * 地址转换
 	 * @param logicAddr 48-bits逻辑地址。实模式和分段模式下，磁盘物理地址==内存物理地址，段页式下，磁盘物理地址==虚页号 * 页框大小 + 偏移量
@@ -45,6 +48,14 @@ public class MMU {
 		String linearAddr;          // 32位线性地址
 		String physicalAddr = "";   // 32位物理地址
 		// TODO 加载数据 + 地址转换
+		if (!(Memory.PAGE||Memory.SEGMENT)){//实模式状态下，无法判断，每次直接读Disk,并且写到memory中
+			physicalAddr = logicAddr.substring(16);
+			memory.load(physicalAddr,physicalAddr,length);
+		}
+		if (Memory.SEGMENT&&!Memory.PAGE){//只分段
+			linearAddr = memory.getPhysicalAddr(logicAddr,length);
+			physicalAddr = linearAddr;
+		}
 		return memory.read(physicalAddr, length);
 	}
 
