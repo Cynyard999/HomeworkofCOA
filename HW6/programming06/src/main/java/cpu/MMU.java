@@ -49,12 +49,13 @@ public class MMU {
 		String physicalAddr = "";   // 32位物理地址
 		// TODO 加载数据 + 地址转换
 		if (!(Memory.PAGE||Memory.SEGMENT)){//实模式状态下，无法判断，每次直接读Disk,并且写到memory中
-			physicalAddr = logicAddr.substring(16);
-			memory.load(physicalAddr,physicalAddr,length);
+			physicalAddr = memory.getPhysicalAddr(logicAddr,length);
 		}
-		if (Memory.SEGMENT&&!Memory.PAGE){//只分段
-			linearAddr = memory.getPhysicalAddr(logicAddr,length);
-			physicalAddr = linearAddr;
+		else if (Memory.SEGMENT&&!Memory.PAGE){//只分段
+			physicalAddr = memory.getPhysicalAddr(logicAddr,length);
+		}
+		else {
+			physicalAddr = memory.getPhysicalAddr(logicAddr,length);
 		}
 		return memory.read(physicalAddr, length);
 	}
