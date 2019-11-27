@@ -2,6 +2,7 @@ package memory;
 
 import transformer.Transformer;
 
+import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -35,7 +36,7 @@ public class Memory {
 
     public static int MEM_SIZE_B = 32 * 1024 * 1024;      // 主存大小 32 MB, 2^25 Bytes
 //假设虚存大小等于磁盘大小，虚存地址空间等于磁盘地址空间(实际情况下虚存大小会远大于内存空间，并且远小于磁盘空间)
-    public static int PAGE_SIZE_B = 1 * 1024;      // 页大小 1 KB 2^10Bytes
+    public static int PAGE_SIZE_B = 1 * 1024;      // 页大小 1 KB 有1024个地址
 
     Transformer t = new Transformer();
 
@@ -45,7 +46,7 @@ public class Memory {
 
     private static ArrayList<SegDescriptor> segTbl = new ArrayList<>();//段表,长度不固定
 
-    private static PageItem[] pageTbl = new PageItem[Disk.DISK_SIZE_B / Memory.PAGE_SIZE_B]; // 页表大小为2^17  128K,一行存储一个页的信息
+    private static PageItem[] pageTbl = new PageItem[Disk.DISK_SIZE_B / Memory.PAGE_SIZE_B]; // 页表大小为2^17行  128*1024行,一行存储一个页的信息
 
     private static ReversedPageItem[] reversedPageTbl = new ReversedPageItem[Memory.MEM_SIZE_B / Memory.PAGE_SIZE_B]; // 反向页表大小为2^15   32K，根据每行的信息，可以知道这个页在磁盘中的信息
 
@@ -60,8 +61,6 @@ public class Memory {
     public static ArrayList<SegDescriptor> getSegTbl() {
         return segTbl;
     }
-
-    //存储memory中每个段的首地址
 
     private static int size;
 
@@ -142,41 +141,41 @@ public class Memory {
         String disk_base = String.valueOf(segDescriptor.getDisk());//得到段在磁盘中的地址
         String memory_base = String.valueOf(segDescriptor.getBase());//得到段在内存中分配的地址
         String newMemory_base = memory_base;
-        if (len+size>MEM_SIZE_B) {//内存总空间不足够
+        if (charsToInt(segDescriptor.limit)+size>MEM_SIZE_B) {//内存总空间不足够
+            System.out.println("内存不足够");
             while (len + size > MEM_SIZE_B) {//总空间不够需要一个被替换掉,stamp最小的，即很久没有访问过的，将这个段写到新分配的内存地址中，修改段表
                 SegDescriptor s = findSeg_toBeReplaced();
                 makeInvalid(s);
+                System.out.println("替换完成");
                 if (len <= Integer.parseInt("0"+String.valueOf(s.limit),2)) {//最先适应，能够填入被替换的空间
+                    System.out.println("最先适应，进入被替换的空间");
                     newMemory_base = String.valueOf(s.base);
                     write(newMemory_base, len, disk.read(disk_base, len));
                     return newMemory_base;
                 }
+                //如果还没有return，则说明需要整理
             }
-            //跳出while说明替换完了，但是并没有直接能进入的空间，那么开始整理,得到内存开始为空的首地址
-            newMemory_base = mem_Defragmentation();
-            write(newMemory_base, len, disk.read(disk_base, len));
-            return newMemory_base;
         }
         else {
             //内存总空间足够：1，找到内存中能填入的地方，填入，然后修改段表内容2.找不到，整理
-            System.out.println("足够");
-            segDescriptor.setValidBit(true);//为了下面最先适应的时候，不会找到本身的段
-            for (SegDescriptor s:segTbl){//最先适应：找到内存中空出来的位置(面向用例，在段表中找到invalid的段，表示从内存中刚退下来，并且这个段的长度大于需要写入内存的长度，找不到就整理)
-                if (len<=charsToInt(s.getLimit())&&!s.validBit){//最先适应填入
+            System.out.println("内存足够");
+            //segDescriptor.setValidBit(true);//为了下面最先适应的时候，不会找到本身的段
+            for (SegDescriptor s:segTbl){//最先适应：找到内存中空出来的位置(在段表中找到invalid的段，表示从内存中刚退下来，并且这个段的长度大于需要写入内存的长度，找不到就整理)
+                if (len<=charsToInt(s.getLimit())&&!s.validBit&&!s.equals(segDescriptor)){//最先适应填入
                     newMemory_base = String.valueOf(s.getBase());
                     write(newMemory_base, len, disk.read(disk_base, len));
                     return newMemory_base;
                 }
             }
-            System.out.println("找不到合适的位置");
-            segDescriptor.setValidBit(false);//再将其改为false，方便整理
-            System.out.println("开始整理");
-            newMemory_base = mem_Defragmentation();
-            System.out.println("整理完成");
-            System.out.println("开始向内存写入");
-            write(newMemory_base, len, disk.read(disk_base, len));
-            return newMemory_base;
         }
+        System.out.println("找不到合适的位置");
+        System.out.println("开始整理");
+        //跳出while说明替换完了，但是并没有直接能进入的空间，那么开始整理,得到内存开始为空的首地址
+        newMemory_base = mem_Defragmentation();
+        System.out.println("整理完成");
+        System.out.println("开始向内存写入");
+        write(newMemory_base, len, disk.read(disk_base, len));
+        return newMemory_base;
     }
 
     //char[]转化为int
@@ -185,39 +184,71 @@ public class Memory {
     }
 
     public String getPhysicalAddr(String logicAddr,int len){
-        String physicalAddr = "";
         if (!SEGMENT&&!PAGE){//实模式
-            physicalAddr = logicAddr.substring(16);
-            write(physicalAddr,len,disk.read(physicalAddr,len));//直接从磁盘中读，然后写入
+            return getPhysicalAddr_real(logicAddr,len);
         }
         else if (SEGMENT&&!PAGE){//只分段
-            int segSelector = Integer.parseInt(t.binaryToInt("0"+logicAddr.substring(0,13)));
-            SegDescriptor segDescriptor = segTbl.get(segSelector);//通过段号获得段描述符
-            if (!segDescriptor.validBit){//内存中没有这个段
-                physicalAddr = load_seg(segDescriptor,len);//写入内存
-                //得到新的在内存中的地址
-                segDescriptor.setValidBit(true);
-                segDescriptor.setBase(physicalAddr.toCharArray());//修改段表内容
-            }
-            else return String.valueOf(segDescriptor.getBase());//内存中有这个段，直接返回段表中对应的地址
+            return getPhysicalAddr_seg(logicAddr,len);
         }
-        else {//如果数据段已经在内存，使用全关联映射+LRU加载物理页框；如果数据段不在内存，先按照分段模式进行管理，分配的段长度为数据段包含的总物理页框数/2，再将物理页框加载到内存
-            int segSelector = Integer.parseInt(t.binaryToInt("0"+logicAddr.substring(0,13)));
-            SegDescriptor segDescriptor = segTbl.get(segSelector);//通过段号获得段描述符
-            String base_seg = String.valueOf(segDescriptor.base);//基地址
-            String offset_seg = logicAddr.substring(16);//段内偏移
-            String linearAddr = t.intToBinary(Integer.parseInt(base_seg,2)+Integer.parseInt(offset_seg,2)+"");//页的逻辑地址
-            int pageNO = Integer.parseInt(linearAddr.substring(0,20),2);//虚页号
-            String offset_page = linearAddr.substring(20);//页内偏移 12位
-            if (segDescriptor.validBit){
-                //TODO:
+        else { //段页式
+            return getPhysicalAddr_PS(logicAddr,len);
+        }
+    }
+
+    private String getPhysicalAddr_real(String logicAddr,int len){
+        String physicalAddr = "";
+        physicalAddr = logicAddr.substring(16);
+        write(physicalAddr,len,disk.read(physicalAddr,len));//直接从磁盘中读，然后写入
+        return physicalAddr;
+    }
+
+    private String getPhysicalAddr_seg(String logicAddr, int len){
+        String physicalAddr;
+        int segSelector = Integer.parseInt(t.binaryToInt("0"+logicAddr.substring(0,13)));
+        SegDescriptor segDescriptor = segTbl.get(segSelector);//通过段号获得段描述符
+        if (!segDescriptor.validBit){//内存中没有这个段
+            physicalAddr = load_seg(segDescriptor,len);//写入内存
+            //得到新的在内存中的地址
+            segDescriptor.setValidBit(true);
+            segDescriptor.setBase(physicalAddr.toCharArray());//修改段表内容
+            return physicalAddr;
+        }
+        else return String.valueOf(segDescriptor.getBase());//内存中有这个段，直接返回段表中对应的地址
+    }
+
+    private String getPhysicalAddr_PS(String logicAddr, int len){
+        //获得一系列信息
+        int segSelector = Integer.parseInt(t.binaryToInt("0"+logicAddr.substring(0,13)));
+        SegDescriptor segDescriptor = segTbl.get(segSelector);//通过段号获得段描述符
+        String base_seg = String.valueOf(segDescriptor.base);//基地址
+        String offset_seg = logicAddr.substring(16);//段内偏移
+        String linearAddr = t.intToBinary(Integer.parseInt(base_seg,2)+Integer.parseInt(offset_seg,2)+"");//页的逻辑地址
+        int pageNO = Integer.parseInt(linearAddr.substring(0,20),2);//虚页号
+        String offset_page = linearAddr.substring(20);//页内偏移 12位
+        String disk_base = t.intToBinary(pageNO*1024+Integer.parseInt(offset_page,2)+"");//磁盘地址等于虚页号乘页面大小加上页面偏移
+
+        if (segDescriptor.validBit){//段在内存内,使用全关联映射+LRU加载物理页框
+            PageItem page  = pageTbl[pageNO];
+            if (page!=null&&page.isInMem){
+                return String.valueOf(page.frameAddr)+offset_page;
+            }
+            if (page==null){
+                page = new PageItem();
+            }
+            write("00000000000000000000"+offset_page,len,disk.read(disk_base,len));
+            return String.valueOf(page.frameAddr)+offset_page;
+        }
+        else {//段不在内存内，先按照分段模式进行管理，分配的段长度为数据段包含的总物理页框数/2，再将物理页框加载到内存
+            if (len>Integer.parseInt(String.valueOf(segDescriptor.limit),2)){//越界
+                segDescriptor.setDisk(disk_base.toCharArray());
+                return load_seg(segDescriptor, len);//加载应该加载的长度
             }
             else {
-                //TODO:
+                segDescriptor.setDisk(disk_base.toCharArray());
+                //return load_seg(segDescriptor,Integer.parseInt(String.valueOf(segDescriptor.limit),2) );
+                return load_seg(segDescriptor, len);//只加载需要的页的长度进入到内存中
             }
         }
-
-        return physicalAddr;
     }
 
     public void write(String eip, int len, char []data){
@@ -251,6 +282,8 @@ public class Memory {
         sd.setLimit(t.intToBinary(String.valueOf(len)).substring(1, 32).toCharArray());
         sd.setValidBit(isValid);
         Memory.segTbl.add(segSelector,sd);
+        //以下为增加的方法
+        sd.updateTimeStamp();
         //增加size
         if (sd.validBit){
             size+=len;
@@ -382,8 +415,7 @@ public class Memory {
         PageItem(){
             Arrays.fill(frameAddr,'0');
         }
-        private char[] frameAddr = new char[32];
-
+        private char[] frameAddr = new char[20];
 
         private boolean isInMem = false;
 
