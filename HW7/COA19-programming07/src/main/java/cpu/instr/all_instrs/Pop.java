@@ -6,15 +6,18 @@ public class Pop implements Instruction{
     public int exec(String eip, int opcode){
         String segReg = CPU_State.cs.read();
         String logicAddr = segReg+eip;
+        int len;
         switch (opcode){
             case 88:
-                return pop_88(logicAddr);
+                len =  pop_88(logicAddr);break;
             case 89:
-                return pop_89(logicAddr);
+                len =  pop_89(logicAddr);break;
             case 90:
-                return pop_90(logicAddr);
-            default:return 0;
+                len =  pop_90(logicAddr);break;
+            default:len =  0;
         }
+        CPU_State.esp.write(transformer.intToBinary(Integer.parseInt(CPU_State.esp.read(),2)+1+""));//栈指针+1
+        return len;
     }
     private int pop_88(String logicAddr){
         String value = memory.topOfStack(CPU_State.esp.read());
