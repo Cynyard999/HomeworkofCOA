@@ -2,7 +2,7 @@ package cpu.instr.all_instrs;
 
 import cpu.CPU_State;
 
-public class Cmp implements Instruction{
+public class Cmp implements Instruction {
     public int exec(String eip, int opcode){
         String segReg = CPU_State.cs.read();
         String logicAddr = segReg+eip;
@@ -14,7 +14,15 @@ public class Cmp implements Instruction{
     }
     private int cmp_61(String logicAddr){
         String imme = String.valueOf(mmu.read(logicAddr,40)).substring(8);
-        CPU_State.eax.write(alu.sub(CPU_State.eax.read(),imme));
+        if(alu.sub(CPU_State.eax.read(),imme).equals("00000000000000000000000000000000")){
+            eflag.setZF(true);
+        }
+        else if (alu.sub(CPU_State.eax.read(),imme).substring(0,1).equals("1")){//imme < eax
+            //
+        }
+        else {
+            //
+        }
         return 40;
     }
 
