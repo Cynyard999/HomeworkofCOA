@@ -27,9 +27,9 @@ public class FPU {
         else stringBuilder.append(0);
         if ((!a.substring(1).contains("1"))||(!b.substring(1).contains("1"))){
             if (a.substring(1,9).equals("11111111")||(b.substring(1,9).equals("11111111"))){
-                return "(0|1){1}1{8}(0+1+|1+0+)(0|1)*";
+                return "(0|1){1}1{8}(0+1+|1+0+)(0|1)*";//NAN
             }
-            stringBuilder.append("0000000000000000000000000000000");
+            stringBuilder.append("0000000000000000000000000000000");//Inf
             return stringBuilder.toString();
         }
         String fractionX = "1"+a.substring(9)+"0000";
@@ -59,7 +59,7 @@ public class FPU {
 
         stringBuilder.append(exponent.substring(1));
         String productAndY = "0000000000000000000000000000"+fractionY;
-        for (int i=0;i<28;i++){
+        for (int i=0;i<28;i++){//28 = 1+23+4
             if (productAndY.endsWith("0")){
                 productAndY = alu.shr("01",productAndY);//逻辑右移
             }

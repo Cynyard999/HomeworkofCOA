@@ -81,7 +81,7 @@ public class FPU {
             }
         }
         String normalizedQuotient = quotient.substring(1,24);
-        if (quotient.charAt(24)=='1'){
+        if (quotient.charAt(24)=='1'){//进位
             normalizedQuotient = alu.add("00000000000000000000001",normalizedQuotient);
         }
         stringBuilder.append(exponent);

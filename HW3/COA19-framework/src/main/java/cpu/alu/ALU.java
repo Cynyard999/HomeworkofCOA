@@ -1,9 +1,6 @@
 package cpu.alu;
 
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import transformer.Transformer;
-
-import java.util.Arrays;
 
 /**
  * Arithmetic Logic Unit
@@ -262,8 +259,6 @@ public class ALU {
 		return String.valueOf(result);
 	}
 
-
-
 	String product;
 	String Y;
 	public void setProduct(String product) {
@@ -276,8 +271,8 @@ public class ALU {
 		StringBuilder stringBuilder1;
 		stringBuilder1 = new StringBuilder(product);
 		stringBuilder1.append(Y);
-		setProduct(sar("01",stringBuilder1.toString()).substring(0,32));
-		setY(sar("01",stringBuilder1.toString()).substring(32));
+		setProduct(sar("1",stringBuilder1.toString()).substring(0,32));
+		setY(sar("1",stringBuilder1.toString()).substring(32));
 	}
 	String mul (String src, String dest){//x*y
 	    int times = src.length();
