@@ -1,7 +1,5 @@
 package cpu.alu;
 
-import com.sun.org.apache.regexp.internal.RE;
-
 public class NBCDU {
 
 	// 模拟寄存器中的进位标志位

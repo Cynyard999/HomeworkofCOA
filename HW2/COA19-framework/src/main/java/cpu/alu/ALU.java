@@ -1,6 +1,5 @@
 package cpu.alu;
 
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import transformer.Transformer;
 
 /**
@@ -130,10 +129,56 @@ public class ALU {
 		return add(dest,findComplement(src));
 	}
 
-    //signed integer mod,dest%src,//余数的符号与被除数相同
+    //signed integer mod,dest%src,//余数的符号需要与被除数相同
+    //signed integer mod
     String imod(String src, String dest) {
-        return new Transformer().intToBinary(String.valueOf(binaryToInt(dest)%binaryToInt(src)));
+        String temp = dest;
+        if (src.charAt(0) == '0' && dest.charAt(0) == '0') {
+            while (isLarger(temp, src) || temp.equals(src)) {
+                temp = sub(src, temp);
+            }
+        }
+        if (src.charAt(0) == '0' && dest.charAt(0) == '1') {
+            while (isLarger("00000000000000000000000000000000", temp) || temp.equals("00000000000000000000000000000000")) {
+                temp = add(src, temp);
+            }
+            temp = sub(src, temp);
+        }
+
+        if (src.charAt(0) == '1' && dest.charAt(0) == '0') {
+            while (isLarger(temp, "00000000000000000000000000000000") || temp.equals("00000000000000000000000000000000")) {
+                temp = add(src, temp);
+            }
+            temp = sub(src, temp);
+        }
+        if (src.charAt(0) == '1' && dest.charAt(0) == '1') {
+            while (isLarger(src, temp) || temp.equals(src)) {
+                temp = sub(src, temp);
+            }
+        }
+        return temp;
     }
+    private boolean isLarger(String a, String b) {
+        if (a.charAt(0) == '0' && b.charAt(0) == '1') {
+            return true;
+        }
+        if (a.charAt(0) == '1' && b.charAt(0) == '0') {
+            return false;
+        }
+        for (int i = 1; i < a.length(); i++) {
+            int diff = a.charAt(i) - b.charAt(i);
+            if (diff > 0) {
+                return true;
+            } else if (diff < 0) {
+                return false;
+            } else {
+                continue;
+            }
+        }
+        return false;
+    }
+
+
     int binaryToInt(String code) {
         if (code==null){
             return 0;

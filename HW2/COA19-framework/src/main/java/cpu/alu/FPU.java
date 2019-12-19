@@ -1,10 +1,5 @@
 package cpu.alu;
 
-import com.sun.xml.internal.ws.api.ha.StickyFeature;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
-
-import javax.swing.text.StyleContext;
-
 /**
  * floating point unit
  * 执行浮点运算的抽象单元
@@ -118,16 +113,16 @@ public class FPU {
                 sma.setSignificand(tempSignificand);
             }
         }
-        else {
+        else {//减法
             significandB = alu.findComplement(significandB);
             String tempSignificand = alu.add(significandA, significandB);
             if (alu.getCF().equals("0")) {//没有产生进位
-                tempSignificand = alu.findComplement(tempSignificand);//结果取反
+                tempSignificand = alu.findComplement(tempSignificand);//结果取反+1
                 sma.setSign(alu.not(signA));
                 sma.setSignificand(tempSignificand);
             } else {//结果产生进位
                 sma.setSign(signA);
-                if (alu.getOF().equals("0")){//但是没有溢出，因为在alu的add中，只有有溢出，进位才会被表现出来
+                if (alu.getOF().equals("0")){
                     sma.setSignificand(tempSignificand);
                 }
                 //有溢出有进位
@@ -144,7 +139,7 @@ public class FPU {
         String significand = sma.getSignificand();
         if (sma.isSignificand_CF()){//加法产生的进位，significand除以2，相应指数增加
             stringBuilder.append(alu.add("00000001",exponent));
-            if (alu.add("00000001",exponent).equals("11111111")){
+            if (alu.add("00000001",exponent).equals("11111111")){//如果溢出
                 stringBuilder.append("00000000000000000000000");//INF
                 return stringBuilder.toString();
             }
@@ -160,7 +155,7 @@ public class FPU {
             return stringBuilder.toString();
         }
         int i = 0;
-        while (significand.charAt(i)=='0'&i<32){
+        while (significand.charAt(i)=='0'&i<32){//其实只可能移动一次
             exponent = alu.sub("00000001",exponent);
             i++;
         }
