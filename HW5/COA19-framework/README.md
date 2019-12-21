@@ -1,4 +1,5 @@
 ## COA2019
+* stamp完全可以调用系统的现在的时间，即System.currentTimeMills.
 思路
 * 首先设置映射策略以及替换策略 setStrategy
 
