@@ -18,10 +18,10 @@ public class Cmp implements Instruction {
             eflag.setZF(true);
         }
         else if (alu.sub(CPU_State.eax.read(),imme).substring(0,1).equals("1")){//imme < eax
-            //
+            eflag.setZF(false);
         }
         else {
-            //
+            eflag.setZF(false);
         }
         return 40;
     }

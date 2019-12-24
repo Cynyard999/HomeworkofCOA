@@ -168,9 +168,6 @@ public class ALU {
     public String add(String src, String dest) {
         // add two integer in 2's complement code
         String result = adder(src, dest, '0', 32);  //注意有进位不等于溢出，溢出要另外判断。已经被封装在上一步
-        if (result.equals("00000000000000000000000000000000")){
-            eflag.setZF(true);
-        }
         return result;
     }
 
@@ -178,9 +175,6 @@ public class ALU {
     // dest - src
     public String sub(String src, String dest) {
         String result = adder(dest, negation(src), '1', 32);
-        if (result.equals("00000000000000000000000000000000")){
-            eflag.setZF(true);
-        }
         //return adder(dest, negation(src), '1', 32);  //不能直接取反加一（有可能取反加一溢出），必须这一步改初始carry位‘0’为‘1’。这样写完全模拟ppt上面的做法，但是还是可能取反的时候就溢出，先加一反而不溢出，所以其实还是不完美。注意有进位不等于溢出，溢出要另外判断。
         return result;
     }

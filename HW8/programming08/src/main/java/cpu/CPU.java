@@ -31,7 +31,9 @@ public class CPU {
     private int execInstr() {
         String eip = CPU_State.eip.read();
         int len = decodeAndExecute(eip);
-        CPU_State.eip.write(transformer.intToBinary(Integer.parseInt(eip,2)+len+""));
+        if (len!=0){
+            CPU_State.eip.write(transformer.intToBinary(Integer.parseInt(eip,2)+len+""));
+        }
         return len;
     }
 
@@ -58,7 +60,7 @@ public class CPU {
     //一直读指令直到遇到hlt
     public void execUntilHlt(){
         while (true){
-            if (execInstr()==0){
+            if (execInstr()==8){
                 break;
             }
         }
