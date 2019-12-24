@@ -33,7 +33,9 @@ public class CPU {
     private int execInstr() {
         String eip = CPU_State.eip.read();
         int len = decodeAndExecute(eip);
-        CPU_State.eip.write(transformer.intToBinary(Integer.parseInt(eip,2)+len+""));
+        if (len!=0){
+            CPU_State.eip.write(transformer.intToBinary(Integer.parseInt(eip,2)+len+""));
+        }
         return len;
     }
 

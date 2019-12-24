@@ -1,6 +1,5 @@
 package cpu.instr.all_instrs;
 
-import cpu.CPU;
 import cpu.CPU_State;
 import cpu.registers.EFlag;
 
@@ -21,9 +20,9 @@ public class Jz implements Instruction{
             CPU_State.eip.write(alu.add(imme,CPU_State.eip.read()));
             return 0;
         }
-        else
-            CPU_State.eip.write(alu.add("00000000000000000000000000010000",CPU_State.eip.read()));
+        else {
             return 16;
+        }
     }
 
 }
