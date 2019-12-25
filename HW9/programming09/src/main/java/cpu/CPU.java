@@ -19,8 +19,8 @@ public class CPU {
         // 执行过的指令的总长度
         int totalLen = 0;
         while (number > 0) {
-            // TODO 上次作业
-            break;
+            totalLen+=execInstr();
+            number--;
         }
         return totalLen;
     }
@@ -31,14 +31,15 @@ public class CPU {
     private int execInstr() {
         String eip = CPU_State.eip.read();
         int len = decodeAndExecute(eip);
+        //注意如果len传回来为0，那么eip已经被改变了，所以还是需要+0；但是需要的是读取新的eip的值
+        CPU_State.eip.write(transformer.intToBinary(Integer.parseInt(CPU_State.eip.read(),2)+len+""));
         return len;
     }
 
     private int decodeAndExecute(String eip) {
-        int opcode = instrFetch(eip, 1);
+        int opcode = instrFetch(eip, 8);
         Instruction instruction = InstrFactory.getInstr(opcode);
         assert instruction != null;
-
         //exec the target instruction
         int len = instruction.exec(eip, opcode);
         return len;
@@ -53,11 +54,17 @@ public class CPU {
      */
     private int instrFetch(String eip, int length) {
         // TODO X   FINISHED √
-        return -1;
+        String segReg = CPU_State.cs.read();
+        char[] opcode = mmu.read(segReg+eip,length);
+        return Integer.valueOf(transformer.binaryToInt(String.valueOf(opcode)));
     }
 
     public void execUntilHlt(){
-        // TODO ICC
+        while (true){
+            if (execInstr()==8){
+                break;
+            }
+        }
     }
 
 }

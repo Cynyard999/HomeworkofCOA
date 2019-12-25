@@ -8,7 +8,7 @@ import kernel.MainEntry;
 import memory.Disk;
 import memory.Memory;
 import transformer.Transformer;
-
+import cpu.alu.ALU;
 import java.io.File;
 import java.io.IOException;
 
@@ -32,8 +32,12 @@ public class Max {
 
 		// TODO 根据传入的a b的值生成两条指令，用于对a b对应的内存区域赋值
 		Transformer t = new Transformer();
-		String instrA = "";
-		String instrB = "";
+		String displacement = zero;
+		String A = t.intToBinary(""+a);
+		String B = t.intToBinary(""+b);
+		String instrA = "1100011110000011"+displacement+A;
+		displacement=new ALU().add(displacement,t.intToBinary(""+A.length()));
+		String instrB = "1100011110000011"+displacement+B;
 
 		// 加载max.txt并执行你的二进制代码
 		try {
