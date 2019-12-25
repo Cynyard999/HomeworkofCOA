@@ -1,5 +1,12 @@
 * 问题 mov里面对于memory的读需要调用mmu吗还是直接读呢，我写的直接读
 * 在max.txt中实现整个代码框架，执行这个代码，然后呢每执行一行就添加，然后maxtest里面存的是这个test需要的代码行
+
+-------
+#### References
+> https://blog.csdn.net/chenlycly/article/details/52235168
+> https://blog.csdn.net/liaomin416100569/article/details/7335663
+> https://blog.csdn.net/Apollon_krj/article/details/77508073
+> https://blog.csdn.net/Apollon_krj/article/details/77524601
 ## 作业目标
 
 使用二进制编写并执行一段简单的if-else语句

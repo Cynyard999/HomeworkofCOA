@@ -22,7 +22,7 @@ public class Jnle implements Instruction {
         EFlag eflag =  (EFlag) CPU_State.eflag;
         String imme = instr.substring(8);
 
-        if(!eflag.getZF()&&!eflag.getOF()&&!eflag.getSF()) {//
+        if(!eflag.getZF()&&!eflag.getOF()&&!eflag.getSF()) {//大于就跳转，需要是正号 不为0 没有进位
             CPU_State.eip.write(alu.add(CPU_State.eip.read(),imme));
         }
         else {
