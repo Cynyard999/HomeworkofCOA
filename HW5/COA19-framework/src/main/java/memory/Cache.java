@@ -69,7 +69,7 @@ public class Cache {	//
 	 * @return 数据块在Cache中的对应行号
 	 * 返回对应的行号，在cache内，直接返回，不在cache内替换，然后返回
 	 */
-	public int fetch(String sAddr, int len) {//返回块号
+	public int fetch(String sAddr, int len) {//返回行号
 		int blockNO = getBlockNO(sAddr);
 		if (mappingStrategy.map(blockNO) == -1) {
 			return mappingStrategy.writeCache(blockNO);

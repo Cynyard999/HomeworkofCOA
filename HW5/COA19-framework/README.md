@@ -1,5 +1,5 @@
 ## COA2019
-* stamp完全可以调用系统的现在的时间，即System.currentTimeMills.
+* stamp完全可以调用系统的现在的时间，即System.currentTimeMills.(待修改)
 思路
 * 首先设置映射策略以及替换策略 setStrategy
 
@@ -10,8 +10,6 @@
 * 注意地址用的是十进制来表示
 
 * cache一共1024行
-
-* miss过后，读的数据是从更新了过后的cache中读取的，实际应该是从memory中读取
 
 * 每个mapping的tag长度不同，但是需要在比较的时候变成22位
 
