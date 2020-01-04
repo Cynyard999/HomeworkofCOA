@@ -39,8 +39,7 @@ public class Cache {	//
 		cache.get(rowNum).data = newData;
 		cache.get(rowNum).validBit = true;
 		cache.get(rowNum).tag = newTag;
-		cache.num_of_block_put_in+=1;
-		cache.get(rowNum).timeStamp = cache.num_of_block_put_in;
+		cache.get(rowNum).timeStamp = System.currentTimeMillis();
 		cache.get(rowNum).visited =1;//刚加入的话，只被使用了一次，那么他的visited为1
 	}
 	public Long getLineTimeStamp(int rowNum){
@@ -49,15 +48,13 @@ public class Cache {	//
 	public int getLineVisited(int rowNum){
 		return cache.get(rowNum).visited;
 	}
-	public void setLineTimeStamp(int rowNum,Long newStamp){
-		cache.get(rowNum).timeStamp = newStamp;
+	public void setLineTimeStamp(int rowNum){
+		cache.get(rowNum).timeStamp = System.currentTimeMillis();
 	}
 	public void increaseLineVisited(int rowNum){
 		cache.get(rowNum).visited+=1;
 	}
-	public Long getTimeStamp(){
-		return cache.num_of_block_put_in;
-	}
+
 	public boolean getLineValid(int rawNum){
 		return cache.get(rawNum).validBit;
 	}
@@ -184,13 +181,11 @@ public class Cache {	//
 	 * 负责对CacheLine进行动态初始化
 	 */
 	private class CacheLinePool {
-		Long num_of_block_put_in;
 		/**
 		 * @param lines Cache的总行数
 		 */
 		CacheLinePool(int lines) {
 			clPool = new CacheLine[lines];
-			num_of_block_put_in = 0L;
 		}
 		private CacheLine[] clPool;
 		private CacheLine get(int lineNO) {

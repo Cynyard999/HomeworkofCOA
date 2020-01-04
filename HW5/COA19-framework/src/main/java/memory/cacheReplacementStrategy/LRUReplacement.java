@@ -21,7 +21,7 @@ public class LRUReplacement extends ReplacementStrategy {
         for (int i=start;i<=end;i++){
             char[] tag = cache.getLineTags(i);
             if (Arrays.equals(tag,addrTag) &&cache.getLineValid(i)){
-                cache.setLineTimeStamp(i,cache.getTimeStamp()+1);//将这一行的使用更新
+                cache.setLineTimeStamp(i);//将这一行的使用更新
                 return i;
             }
         }
