@@ -1,7 +1,6 @@
 package cpu.instr.all_instrs;
 
 import cpu.CPU_State;
-import cpu.alu.ALU;
 import cpu.registers.EFlag;
 import program.Log;
 

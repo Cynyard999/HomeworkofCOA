@@ -1,6 +1,5 @@
 package cpu.instr.all_instrs;
 
-import cpu.CPU;
 import cpu.CPU_State;
 import program.Log;
 
