@@ -68,10 +68,11 @@ public class Cache {	//
 	 */
 	public int fetch(String sAddr, int len) {//返回行号
 		int blockNO = getBlockNO(sAddr);
-		if (mappingStrategy.map(blockNO) == -1) {
+		int lineNo = mappingStrategy.map(blockNO);
+		if (lineNo == -1) {
 			return mappingStrategy.writeCache(blockNO);
 		} else {//如果在cache中有需要的行
-			return mappingStrategy.map(blockNO);
+			return lineNo;
 		}
 	}
 
@@ -86,11 +87,11 @@ public class Cache {	//
 		char[] data = new char[len];
 		Transformer t = new Transformer();
 		int addr =  Integer.parseInt(t.binaryToInt("0" + eip));
-		int upperBound = addr + len;
+		int upperBound = addr + len;//结尾地址
 		int index = 0;
 		while (addr < upperBound) {
 			int nextSegLen = LINE_SIZE_B - (addr % LINE_SIZE_B);//剩下部分的长度，即一直到这个块的结束
-			if (addr + nextSegLen >= upperBound) {//多个块的情况，先读第一个块
+			if (addr + nextSegLen >= upperBound) {//只用读这一个块中的内容
 				nextSegLen = upperBound - addr;
 			}
 			int rowNO = fetch(t.intToBinary(String.valueOf(addr)), nextSegLen);//首地址以及读取的数据数量，给出此时cache的行的标号

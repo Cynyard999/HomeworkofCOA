@@ -1,8 +1,5 @@
 package memory.cacheMappingStrategy;
 
-import memory.Cache;
-import memory.Memory;
-import transformer.Transformer;
 
 public class AssociativeMapping extends MappingStrategy {  // 全相联映射
 
@@ -22,11 +19,12 @@ public class AssociativeMapping extends MappingStrategy {  // 全相联映射
     public int map(int blockNO) {
         char [] tag = getTag(blockNO);
         //在所有的cache内没有找到
-        if (replacementStrategy.isHit(0,1023,tag)==-1){//如果没有找到
+        int lineNo = replacementStrategy.isHit(0,1023,tag);
+        if (lineNo==-1){//如果没有找到
             return -1;
         }
         else {
-            return replacementStrategy.isHit(0, 1023, tag);//找到
+            return lineNo;//找到
         }
     }
 
