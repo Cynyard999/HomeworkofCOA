@@ -153,23 +153,29 @@ public class Memory {
                     write(newMemory_base, len, disk.read(disk_base, len));
                     return newMemory_base;
                 }
-                //如果还没有return，则说明需要整理
             }
+            //如果跳出了while但是还是没有return，说明需要整理
+            //TODO：整理然后返回
+            System.out.println("替换后找不到合适的位置，需要整理");
+            System.out.println("开始整理");
+            newMemory_base = mem_Defragmentation();
+            System.out.println("整理完成");
+            System.out.println("开始向内存写入");
+            write(newMemory_base, len, disk.read(disk_base, len));
+            return newMemory_base;
         }
-        else {
-            //内存本来总空间就足够：1，找到内存中能填入的地方，填入，然后修改段表内容2.找不到，整理
-            System.out.println("内存足够");
-            //TODO： 查询内存中的空闲位置，看是否能放入（通过段表查询，然后保存已经加载入内存的段的信息，通过这种信息找到内存中最大的空闲位置的起始位置以及其大小，然后比较能否放入
-            for (SegDescriptor s:segTbl){//查询段表，看是不是
-                if (len<=charsToInt(s.getLimit())&&!s.validBit&&!s.equals(segDescriptor)){//最先适应填入
-                    newMemory_base = String.valueOf(s.getBase());
-                    write(newMemory_base, len, disk.read(disk_base, len));
-                    return newMemory_base;
-                }
-            }//面向用例编程，不能这样写
 
-        }
-        //足够和不足够（但是替换了）都找不到合适的位置：
+        //内存总空间足够：1，找到内存中能填入的地方，填入，然后修改段表内容2.找不到，整理
+        System.out.println("内存足够");
+        //TODO： 查询内存中的空闲位置，看是否能放入（通过段表查询，然后保存已经加载入内存的段的信息，通过这种信息找到内存中最大的空闲位置的起始位置以及其大小，然后比较能否放入
+        for (SegDescriptor s:segTbl){//查询段表，看是不是
+            if (len<=charsToInt(s.getLimit())&&!s.validBit&&!s.equals(segDescriptor)){
+                newMemory_base = String.valueOf(s.getBase());
+                write(newMemory_base, len, disk.read(disk_base, len));
+                return newMemory_base;
+            }
+        }//面向用例编程，不能这样写
+        //如果还没有return，说明需要整理
         System.out.println("找不到合适的位置");
         System.out.println("开始整理");
         //跳出说明没有直接能进入的空间，那么开始整理,得到内存开始为空的首地址
@@ -223,11 +229,13 @@ public class Memory {
         int segSelector = Integer.parseInt(t.binaryToInt("0"+logicAddr.substring(0,13)));
         SegDescriptor segDescriptor = segTbl.get(segSelector);//通过段号获得段描述符
         String base_seg = String.valueOf(segDescriptor.base);//基地址
-        String offset_seg = logicAddr.substring(16);//段内偏移
-        String linearAddr = t.intToBinary(Integer.parseInt(base_seg,2)+Integer.parseInt(offset_seg,2)+"");//页的逻辑地址
-        int pageNO = Integer.parseInt(linearAddr.substring(0,20),2);//虚页号
-        String offset_page = linearAddr.substring(20);//页内偏移 12位
-        String disk_base = t.intToBinary(pageNO*PAGE_SIZE_B+Integer.parseInt(offset_page,2)+"");//磁盘地址等于虚页号乘页面大小加上页面偏移
+        //String offset_seg = logicAddr.substring(16);//段内偏移
+        //String linearAddr = t.intToBinary(Integer.parseInt(base_seg,2)+Integer.parseInt(offset_seg,2)+"");//页的逻辑地址
+        //int pageNO = Integer.parseInt(linearAddr.substring(0,20),2);//虚页号
+        int pageNO = Integer.parseInt(  t.binaryToInt( logicAddr.substring( 16, 36 ) ));
+        int offset_page = Integer.parseInt( t.binaryToInt( logicAddr.substring( 36, 48 )) );
+        //String offset_page = linearAddr.substring(20);//页内偏移 12位
+        String disk_base = t.intToBinary(pageNO*PAGE_SIZE_B+offset_page+"");//磁盘地址等于虚页号乘页面大小加上页面偏移
 
         if (segDescriptor.validBit){//段在内存内,使用全关联映射+LRU加载物理页框
             PageItem page  = pageTbl[pageNO];
